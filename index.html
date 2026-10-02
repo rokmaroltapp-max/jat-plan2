@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Julian Alps Trail 80K — Tekaški načrt 2026</title>
+<title>Rokovi dnevniki — Trening 2026/27</title>
 <style>
   :root {
     --bg: #f8f9fa;
@@ -41,13 +41,6 @@
   .header-sub { font-size: clamp(13px,3vw,17px); color: var(--green); margin-top: 3px; font-style: italic; }
   .header-dates { font-size: 12px; color: var(--text3); margin-top: 6px; }
   .header-dates span { color: var(--purple); }
-  
-  /* STATS ROW (Countdown & Fitness) */
-  .header-stats-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; align-items: center; }
-  .countdown-badge { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; background: #e0e7ff; color: #3730a3; padding: 5px 12px; border-radius: 8px; border: 1px solid #c7d2fe; display: inline-flex; align-items: center; gap: 6px; }
-  .wellness-badge { font-family: system-ui, -apple-system, sans-serif; font-size: 12px; background: #fce4ec; color: #9c27b0; padding: 5px 12px; border-radius: 8px; border: 1px solid #f8bbd0; display: inline-flex; align-items: center; gap: 6px; }
-  .wellness-badge span { font-weight: 600; }
-
   .phase-pills { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
   .phase-pill { display: flex; align-items: center; gap: 8px; }
   .phase-pill-weeks { font-size: 11px; color: var(--text3); }
@@ -70,22 +63,21 @@
   .phase-bar { width: 3px; height: 32px; border-radius: 2px; flex-shrink: 0; }
   .phase-title { font-size: 15px; font-style: italic; }
   .phase-desc { font-size: 11px; color: var(--text3); }
-  .week-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px,1fr)); gap: 9px; }
-  .week-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; cursor: pointer; position: relative; transition: border-color 0.15s; display: flex; flex-direction: column; }
+  .week-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 7px; }
+  .week-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; cursor: pointer; position: relative; transition: border-color 0.15s; }
   .week-card:hover { border-color: #868e96; }
-  .week-card.selected { background: #f0fdf4; border-color: #bbf7d0 !important; }
+  .week-card.selected { background: #f0fdf4; }
   .week-card-regen { position: absolute; top: 5px; right: 7px; font-size: 8px; color: var(--text4); letter-spacing: 0.12em; text-transform: uppercase; }
   .week-card-label { font-size: 10px; color: var(--text4); margin-bottom: 2px; }
   .week-card-num { font-size: 19px; font-style: italic; line-height: 1.1; }
-  .week-dots { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
-  
-  /* DNEVNE PIKE V PREGLEDU - POSODOBLJENO */
-  .week-dot { width: 8px; height: 8px; border-radius: 50%; transition: all 0.2s; display: flex; align-items: center; justify-content: center; font-size: 6px; color: #fff; font-family: sans-serif; }
-  .week-dot.done-dot { background: #2f9e44 !important; }
-  /* Elegantna obroba in kljukica za Intervals aktivnosti */
-  .week-dot.icu-active { background: #2f9e44 !important; outline: 1.5px solid #bbf7d0; outline-offset: 1px; }
-
-  .week-summary { margin-top: auto; padding-top: 10px; border-top: 1px dashed var(--border); font-size: 11px; color: var(--text2); line-height: 1.4; display: flex; flex-direction: column; gap: 2px; }
+  .week-dots { display: flex; gap: 3px; margin-top: 8px; }
+  .week-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .race-strip { display:flex; flex-wrap:wrap; gap:7px 14px; margin-top:14px; font-size:11px; color:var(--text2); }
+  .race-strip span { background:rgba(255,255,255,.65); border:1px solid var(--border); padding:5px 8px; border-radius:999px; }
+  .race-strip strong { color:var(--purple); }
+  .race-strip em { color:var(--text3); }
+  .week-card-focus { margin-top:7px; font-size:10px; color:var(--text3); line-height:1.35; }
+  .week-card-load { margin-top:4px; font-size:9px; color:var(--text4); }
 
   /* WEEK VIEW */
   .week-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
@@ -98,12 +90,9 @@
   
   .days-list { display: flex; flex-direction: column; gap: 8px; }
   .day-card { border-radius: 9px; overflow: hidden; }
-  .day-card.rest { opacity: 0.6; }
-  .day-card.is-today { border: 2px solid var(--blue) !important; background: #f0f9ff !important; box-shadow: 0 4px 12px rgba(25, 113, 194, 0.1); opacity: 1 !important; }
-  .today-badge { font-size: 9px; font-weight: bold; background: var(--blue); color: #fff; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; margin-bottom: 2px; }
-
+  .day-card.rest { opacity: 0.5; }
   .day-header { padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .day-icon-col { width: 55px; text-align: center; flex-shrink: 0; }
+  .day-icon-col { width: 44px; text-align: center; flex-shrink: 0; }
   .day-day { font-size: 10px; color: var(--text4); letter-spacing: 0.1em; margin-bottom: 1px; }
   .day-emoji { font-size: 22px; }
   .day-info { flex: 1; min-width: 130px; }
@@ -142,7 +131,7 @@
 
   .hidden { display: none !important; }
   /* ACTIVITY LINK */
-  .day-card.done { border-left: 4px solid #2f9e44 !important; opacity: 1; }
+  .day-card.done { border-left: 4px solid #2f9e44 !important; }
   .done-badge { display:inline-flex; align-items:center; gap:4px; font-size:11px; background:#ebfbee; color:#2f9e44; border:1px solid #2f9e4444; padding:3px 9px; border-radius:20px; font-family:inherit; flex-shrink:0; cursor:default; }
 
   .activity-row { padding: 0 16px 12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
@@ -153,7 +142,10 @@
   .activity-save-btn:hover { background:#1864ab; }
   .activity-clear-btn { padding:5px 10px; background:none; color:#adb5bd; border:1px solid var(--border); border-radius:6px; cursor:pointer; font-size:11px; font-family:inherit; }
   .activity-clear-btn:hover { color:#c92a2a; border-color:#c92a2a; }
+  .week-dot.done-dot { outline: 2px solid #2f9e44; outline-offset: 1px; }
   .day-note-preview { font-size:11px; color:#2f9e44; margin-top:3px; font-style:italic; white-space:pre-wrap; word-break:break-word; }
+
+  
 
   /* INTERVALS.ICU PANEL */
   .icu-bar { background:#f0f9ff; border-bottom:1px solid #bae6fd; padding:8px 20px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
@@ -161,7 +153,7 @@
   .icu-status { font-size:12px; color:#0369a1; display:flex; align-items:center; gap:6px; }
   .icu-status.error { color:#c92a2a; }
   .icu-status.ok { color:#2f9e44; }
-  .icu-input { padding:5px 10px; border:1px solid #bae6fd; border-radius:6px; font-size:12px; font-family:inherit; background:#fff; color:#1e293b; outline:none; width:300px; }
+  .icu-input { padding:5px 10px; border:1px solid #bae6fd; border-radius:6px; font-size:12px; font-family:inherit; background:#fff; color:#1e293b; outline:none; width:260px; }
   .icu-input:focus { border-color:#0369a1; }
   .icu-btn { padding:5px 12px; background:#0369a1; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:12px; font-family:inherit; white-space:nowrap; }
   .icu-btn:hover { background:#0284c7; }
@@ -178,10 +170,13 @@
   .icu-activity-name { font-size:11px; color:#15803d; font-style:italic; margin-bottom:4px; }
   .icu-activity-link { font-size:11px; color:#0369a1; text-decoration:none; margin-left:auto; }
   .icu-activity-link:hover { text-decoration:underline; }
+  .icu-loading { font-size:11px; color:#64748b; padding:4px 16px; }
   @media(max-width:600px){
     .header-top { flex-direction: column; }
     .phase-pills { align-items: flex-start; }
     .detail-row { flex-direction: column; gap: 2px; }
+    .race-strip { gap:6px; }
+    .race-strip span { font-size:10px; }
     .detail-label { min-width: unset; }
   }
 </style>
@@ -192,35 +187,16 @@
   <div class="header-inner">
     <div class="header-top">
       <div>
-        <div class="header-label">Tekaški načrt · 22 tednov</div>
-        <h1>Julian Alps Trail</h1>
-        <div class="header-sub">80 km · ~4000m D+</div>
-        <div class="header-dates">20. april 2026 → <span>19. september 2026</span></div>
-        
-        <div class="header-stats-row">
-          <div class="countdown-badge" id="countdown-badge">
-            ⏱ Računam...
-          </div>
-          <div class="wellness-badge" id="fitness-fatigue" style="display:none;">
-            💪 Fitnes (CTL): <span id="val-ctl">--</span>
-            <span style="color:#f8bbd0; margin:0 4px">|</span>
-            📉 Utrujenost (ATL): <span id="val-atl">--</span>
-          </div>
-        </div>
+        <div class="header-label">Rokovi dnevniki · sezona 2026/27 · 45 tednov</div>
+        <h1>Rokovi dnevniki</h1>
+        <div class="header-sub">Od baze do dolgih gora · tek ali kolo</div>
+        <div class="header-dates">28. september 2026 → <span>8. avgust 2027</span></div>
       </div>
-      
       <div class="phase-pills">
-        <div class="phase-pill">
-          <span class="phase-pill-weeks">T1–T8</span>
-          <span class="phase-pill-badge" style="background:#ebfbee;color:#2f9e44;border:1px solid #2f9e4455">Gradnja baze</span>
-        </div>
-        <div class="phase-pill">
-          <span class="phase-pill-weeks">T9–T17</span>
-          <span class="phase-pill-badge" style="background:#fff3bf;color:#e67700;border:1px solid #e6770055">Specifika</span>
-        </div>
-        <div class="phase-pill">
-          <span class="phase-pill-weeks">T18–T22</span>
-          <span class="phase-pill-badge" style="background:#f8f0fc;color:#ae3ec9;border:1px solid #ae3ec955">Vrhunec & Taper</span>
+          <div class="phase-pill"><span class="phase-pill-weeks">T1–T8</span><span class="phase-pill-badge" style="background:#fff5f5;color:#c92a2a;border:1px solid #c92a2a55">GO4 & reset</span></div>
+          <div class="phase-pill"><span class="phase-pill-weeks">T9–T18</span><span class="phase-pill-badge" style="background:#ebfbee;color:#2f9e44;border:1px solid #2f9e4455">Baza + moč</span></div>
+          <div class="phase-pill"><span class="phase-pill-weeks">T19–T31</span><span class="phase-pill-badge" style="background:#e7f5ff;color:#1971c2;border:1px solid #1971c255">Ultra / UTVV</span></div>
+          <div class="phase-pill"><span class="phase-pill-weeks">T32–T45</span><span class="phase-pill-badge" style="background:#fff3bf;color:#e67700;border:1px solid #e6770055">Lavaredo → K24</span></div>
         </div>
       </div>
     </div>
@@ -229,7 +205,13 @@
       <span style="color:#2f9e44">● Z2</span>
       <span style="color:#f59e0b">● Z3</span>
       <span style="color:#f97316">● Z4</span>
-      <span style="color:#868e96;margin-left:8px">🔄 zamenjaj tek↔kolo · ▼ podrobnosti treninga</span>
+      <span style="color:#868e96;margin-left:8px">🔄 zamenjaj tek↔kolo · ▼ podrobnosti · 📝 zapiši trening</span>
+    </div>
+    <div class="race-strip">
+      <span><b>7.11.2026 · 07:30</b> GO4Trail 64K</span>
+      <span><b>23.4.2027 · 19:00</b> UTVV 163K <em>opcijsko</em></span>
+      <span><b>26.6.2027 · 07:00</b> Lavaredo 80K <strong>★ glavni cilj</strong></span>
+      <span><b>6.8.2027 · 22:00</b> K24 100K</span>
     </div>
   </div>
 </div>
@@ -239,7 +221,7 @@
     <span style="font-size:13px;font-weight:600;color:#0369a1">⚡ Intervals.icu</span>
     <div id="icu-config" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span class="icu-label">Worker URL:</span>
-      <input class="icu-input" id="icu-worker-url" value="https://jat-proxy.rok-marolt-app.workers.dev/" placeholder="https://jat-proxy.rok-marolt-app.workers.dev">
+      <input class="icu-input" id="icu-worker-url" placeholder="https://roki-proxy.rokime.workers.dev" style="width:300px">
       <button class="icu-btn" onclick="icuConnect()">Poveži</button>
       <span class="icu-label" id="icu-status-txt"></span>
     </div>
@@ -251,6 +233,7 @@
     </div>
   </div>
 </div>
+
 
 <div class="tabs-wrap">
   <div class="tabs">
@@ -265,61 +248,36 @@
 </div>
 
 <script>
-// ─── Pomožne funkcije za datume ──────────────────────────────────────────────────
-function toLocalISODate(date) {
-  const d = new Date(date);
-  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-}
-
-// Odštevalnik
-function updateCountdown() {
-  const raceDate = new Date("2026-09-19T08:00:00+02:00").getTime();
-  const now = new Date().getTime();
-  const diff = raceDate - now;
-
-  if (diff < 0) {
-    document.getElementById('countdown-badge').innerHTML = "🏁 Tekma je v teku ali končana!";
-    return;
-  }
-
-  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-  document.getElementById('countdown-badge').innerHTML = `⏱ Do tekme: <b>${d} dni, ${h} ur, ${m} min</b>`;
-}
-setInterval(updateCountdown, 60000);
-updateCountdown();
-
 // ─── DATA ────────────────────────────────────────────────────────────────────
 const PHASES = [
-  {name:"Gradnja baze", weeks:[1,2,3,4,5,6,7,8], color:"#2f9e44", desc:"Aerobna baza, intervali na klancu, gradnja volumna"},
-  {name:"Specifika", weeks:[9,10,11,12,13,14,15,16,17], color:"#e67700", desc:"Gorski dnevi, back-to-back vikendi, klanec Z4, funkcionalna moč"},
-  {name:"Vrhunec & Taper", weeks:[18,19,20,21,22], color:"#ae3ec9", desc:"Postopno zmanjšanje, aktivacija, priprava na dirko"},
+  {name:"GO4 priprava", weeks:[1,2,3,4,5,6], color:"#c92a2a", desc:"Zaključek priprave na GO4Trail 64 km · nato premišljen reset."},
+  {name:"Reset", weeks:[7,8], color:"#868e96", desc:"Regeneracija, gibljivost in postopen povratek po GO4."},
+  {name:"Baza + moč", weeks:[9,10,11,12,13,14,15,16,17,18], color:"#2f9e44", desc:"Aerobna baza, moč nog, prag in postopno podaljševanje dolgih treningov."},
+  {name:"Ultra build", weeks:[19,20,21,22,23,24,25,26,27,28,29], color:"#1971c2", desc:"Čas na nogah, vertikala, back-to-back in prehrana za dolge ure."},
+  {name:"UTVV blok", weeks:[30,31], color:"#6741d9", desc:"UTVV je opcijska kontrolirana ultra; po tekmi sledi zaščita Lavareda."},
+  {name:"Lavaredo spec.", weeks:[32,33,34,35,36,37,38], color:"#e67700", desc:"Gorska specifičnost, spusti, dolgi traili, peak in taper."},
+  {name:"Lavaredo → K24", weeks:[39,40,41,42,43,44,45], color:"#ae3ec9", desc:"Glavni cilj Lavaredo, nato regeneracija in drugi vrh na K24."},
 ];
 const TYPE_ICONS = {
-  "Počitek":"💤","Intervali":"⚡","Moč":"💪","Vzdržljivost":"🔄",
-  "Dolg trening":"⛰️","Aktivno":"🚶","Regeneracija":"🛌","Mobilnost":"🧘",
-  "Aktivni sprehod":"🌿","Klanec":"📈","Spec. vzdržl.":"🏔️",
-  "GORSKI DAN":"🏔️","Back-to-back":"🔁","Aktivacija":"⚡",
-  "Kratek tek/kolo":"🏃","Dolg (zmanjšano)":"📉","Preteg":"🎯",
-  "TEKMA":"🏁","REGENERACIJA":"🎉",
+  "Počitek":"💤","Intervali":"⚡","Prag/klanec":"⛰️","Klanec":"📈","Moč":"💪",
+  "Aerobno":"🔄","Spec. aerobno":"🔄","Spec. vzdržl.":"🔄","Dolg trail":"🏔️",
+  "Back-to-back":"🔁","Aktivno":"🚶","Regeneracija":"🛌","Mobilnost":"🧘",
+  "Aktivacija":"⚡","Kratek tek/kolo":"🏃","Nočni spec.":"🌙","TEKMA":"🏁",
+  "REGENERACIJA":"🎉",
 };
 const TYPE_COLORS = {
-  "Počitek":"#868e96","Intervali":"#c92a2a","Moč":"#6741d9",
-  "Vzdržljivost":"#1971c2","Dolg trening":"#e67700","Aktivno":"#2f9e44",
-  "Regeneracija":"#868e96","Mobilnost":"#6741d9","Aktivni sprehod":"#2f9e44",
-  "Klanec":"#d9480f","Spec. vzdržl.":"#1971c2","GORSKI DAN":"#e67700",
-  "Back-to-back":"#2f9e44","Aktivacija":"#c92a2a","Kratek tek/kolo":"#2f9e44",
-  "Dolg (zmanjšano)":"#e67700","Preteg":"#6741d9","TEKMA":"#c92a2a",
-  "REGENERACIJA":"#ae3ec9",
+  "Počitek":"#868e96","Intervali":"#c92a2a","Prag/klanec":"#d9480f","Klanec":"#d9480f",
+  "Moč":"#6741d9","Aerobno":"#1971c2","Spec. aerobno":"#1971c2","Spec. vzdržl.":"#1971c2",
+  "Dolg trail":"#e67700","Back-to-back":"#2f9e44","Aktivno":"#2f9e44","Regeneracija":"#868e96",
+  "Mobilnost":"#6741d9","Aktivacija":"#c92a2a","Kratek tek/kolo":"#2f9e44",
+  "Nočni spec.":"#6741d9","TEKMA":"#c92a2a","REGENERACIJA":"#ae3ec9",
 };
 const ZONE_COLORS = {
   "Z1":"#0c8599","Z2":"#2f9e44","Z3":"#e67700","Z4":"#d9480f",
   "Z2/Z3":"#5c940d","Z2/Z4":"#c2500a","MAX":"#c92a2a",
   "Srednja":"#6741d9","Nizka":"#868e96","/":"#adb5bd",
 };
-const REGEN_WEEKS = [4,8,12,16,20];
+const REGEN_WEEKS = [5,7,8,13,17,22,25,31,40,44];
 
 const STR_A = {
   warmup:"5 min hoja/lahek tek + 10× počep z lastno težo, 10× izpad",
@@ -373,132 +331,483 @@ const YOGA = [
 function getDetail(w, d, isBike) {
   const t = d.t;
   const content = isBike ? d.b : d.a;
+
   if (t === "Moč") {
-    const str = w >= 9 ? STR_FUNC : (w % 2 === 0 ? STR_B : STR_A);
+    const str = w >= 18 ? STR_B : (w % 2 === 0 ? STR_B : STR_A);
     return {
-      note: w >= 9 ? "Funkcionalna moč — fokus na eksplozivnost in stabilnost za gorski teren. Dodaj nahrbtnik kjer je možno." : "Osnovna moč — gradnja baze za kolena, boke in stabilizatorje. Pravilna tehnika > velika utež.",
-      warmup: str.warmup, exercises: str.exercises, cooldown: str.cooldown,
+      note: w >= 18 ? "Vzdrževanje moči: manj volumna, kakovost izvedbe in stabilnost. Od marca naprej je cilj ohraniti moč, ne ustvarjati mišične utrujenosti." : "Osnovna moč: gradi stabilna kolena, boke, zadnjo verigo in trup. Tehnika > velika teža.",
+      warmup:str.warmup, exercises:str.exercises, cooldown:str.cooldown
     };
   }
-  if (t === "Mobilnost") return { note:"Nežno, brez sile. Drži vsak položaj vsaj 60–90 sekund. Fokus na dihanje.", exercises: YOGA };
-  if (t === "Intervali") {
-    if (isBike) {
-      const m = d.b.match(/(\d+)x(\d+)'/); const reps=m?+m[1]:6; const dur=m?+m[2]:5;
-      return { note:"Kolesarski intervali moči (nizki obrati, visoka sila). Idealno na klancu ali stacionarnem kolesu. 50–60 rpm simulira obremenitev vzpona.",
-        warmup:"10–15 min lahkotno vrtenje Z1",
-        main:[{label:"Ogrevanje",val:"10–15 min Z1, nizek odpor"},{label:"Serije",val:`${reps} × ${dur} min @ Z4, nizki obrati (50–60 rpm)`},{label:"Odmor med serijami",val:"3–4 min lahkotno vrtenje Z1"},{label:"Skupen interval čas",val:`~${reps*dur+(reps-1)*3} min`},{label:"Ohlajanje",val:"10 min lahkotno vrtenje Z1"}],
-        cooldown:"10 min lahkotno + raztezanje: kvadriceps, zadnja stegna, spodnji hrbet" };
-    }
-    const m = d.a.match(/(\d+)x(\d+)'/); const reps=m?+m[1]:6; const dur=m?+m[2]:3; const rest=dur<=3?"2–3 min":"3–4 min";
-    return { note:"Klanec 8–15% naklon. Ohranjaj konstanten ritem — ne sprint, ampak zahtevno. Roke aktivno pomagajo.",
-      warmup:"10–15 min lahek tek Z1 po ravnem",
-      main:[{label:"Ogrevanje",val:"10–15 min Z1"},{label:"Serije",val:`${reps} × ${dur} min hrib @ Z4`},{label:"Odmor med serijami",val:`${rest} lahek spust ali hoja`},{label:"Skupen interval čas",val:`~${reps*dur+(reps-1)*2} min`},{label:"Ohlajanje",val:"10 min Z1"}],
-      cooldown:"10 min lahek tek Z1 + 5 min dinamično raztezanje" };
+  if (t === "Mobilnost") return {note:"Nežno, brez sile. 20–30 minut je dovolj. Fokus: gležnji, meča, kolki, zadnja stegna in hrbtenica.", exercises:YOGA};
+
+  if (t === "Intervali" || t === "Prag/klanec" || t === "Klanec") {
+    return {
+      note:t==="Klanec" ? "Dolg klanec za specifično gorsko moč. Ritem naj bo enakomeren; ne lovi vrha z zadnjimi ponovitvami." : "Kakovosten dražljaj, ne test. Zadnja ponovitev naj bo približno tako dobra kot prva.",
+      warmup:isBike?"15 min lahkotno Z1–Z2 + 3 kratki obrati":"15 min lahek tek Z1–Z2 + 3 kratka stopnjevanja",
+      main:[
+        {label:"Glavni del",val:content},
+        {label:"Napor",val:"RPE 7–8/10; ostani pod nadzorom, brez sprintanja"},
+        {label:"Pavza",val:"2–4 min zelo lahkotno oziroma do normalnega dihanja"},
+        {label:"Ohlajanje",val:isBike?"10–15 min Z1":"10–15 min Z1 + 5 min hoje"}
+      ],
+      cooldown:"5–10 min lahkotno + meča/kolki"
+    };
   }
-  if (t === "Klanec") {
-    if (isBike) {
-      const m=d.b.match(/(\d+)x(\d+)'/); const reps=m?+m[1]:4; const dur=m?+m[2]:12;
-      return { note:`Dolgi kolesarski klanci (${dur}') — vzdrži konstanten pritisk na pedala. Idealno na resničnem klancu ali trenažerju.`,
-        warmup:"15 min lahkotno vrtenje Z1–Z2",
-        main:[{label:"Ogrevanje",val:"15 min Z1–Z2"},{label:"Serije",val:`${reps} × ${dur} min klanec @ Z4 (60–70 rpm)`},{label:"Odmor med serijami",val:"4–5 min lahkotno vrtenje Z1"},{label:"Skupen interval čas",val:`~${reps*dur+(reps-1)*4} min`},{label:"Ohlajanje",val:"10–15 min lahkotno vrtenje Z1"}],
-        cooldown:"10 min + raztezanje: kolki, kvadriceps, spodnji hrbet" };
-    }
-    const m=d.a.match(/(\d+)x(\d+)'/); const reps=m?+m[1]:4; const dur=m?+m[2]:8;
-    return { note:`Dolgi klanci (${dur}') zahtevajo konstanten ritem. Če HR preseže Z4, upočasni. Kratki koraki, rahel nagib naprej. Palice priporočene.`,
-      warmup:"15 min lahek tek Z1–Z2, vključi 2–3 kratke pospeške",
-      main:[{label:"Ogrevanje",val:"15 min Z1–Z2"},{label:"Serije",val:`${reps} × ${dur} min klanec @ Z4`},{label:"Odmor med serijami",val:"3–4 min lahek spust ali hoja"},{label:"Skupen interval čas",val:`~${reps*dur+(reps-1)*3} min`},{label:"Ohlajanje",val:"10–15 min Z1"}],
-      cooldown:"10 min hoja + raztezanje mečic in kvadricepsa" };
-  }
-  if (t === "Aktivacija") {
-    if (isBike) return { note:"Namen: prebuditi noge pred dirko. Lahkotno vrtenje z nekaj kratkimi pospeški — ne izprazni baterij!",
-      warmup:"10 min lahkotno vrtenje Z1",
-      main:[{label:"Lahkotno vrtenje",val:"30–35 min Z1–Z2"},{label:"Pospeški",val:"2–4 × 20s visoki obrati, polno oporavilo"},{label:"Odmor med pospeški",val:"3 min lahkotno"},{label:"Ohlajanje",val:"10 min Z1"}],
-      cooldown:"5 min raztezanje" };
-    return { note:"Namen: 'prebuditi' noge brez utrujenosti. Sprinti naj se zdijo lahki — ne izprazni baterij!",
-      warmup:"10 min lahek tek Z1",
-      main:[{label:"Lahek tek",val:"20–25 min Z1–Z2"},{label:"Sprinti",val:"2–4 × 30s @ Z4, polno oporavilo"},{label:"Odmor med sprinti",val:"2–3 min hoja"},{label:"Ohlajanje",val:"5–10 min Z1"}],
-      cooldown:"5 min raztezanje" };
-  }
-  if (t === "Vzdržljivost") {
-    if (isBike) return { note:"Kolesarska vzdržljivost Z3 — konstanten tempo, enakomeren ritem.",
-      main:[{label:"Ogrevanje",val:"10 min Z1 lahkotno vrtenje"},{label:"Glavni del",val:`${content} — konstanten ritem`},{label:"Priporočilo",val:"Valovita trasa za simulacijo terena"},{label:"Ohlajanje",val:"10 min Z1 lahkotno"}] };
-    return { note:"Z3 = znaš govoriti, a ne celih stavkov. Enakomeren ritem skozi cel trening.",
-      main:[{label:"Ogrevanje",val:"5–10 min Z1"},{label:"Glavni del",val:`${content} — konstantni tempo`},{label:"Ohlajanje",val:"5 min Z1 + hoja"}] };
-  }
-  if (t === "Spec. vzdržl.") {
-    if (isBike) return { note:"Daljše kolesarjenje z menjavami intenzivnosti — posnemaj profile vzponov JAT. Na vzponih Z3, na ravnem Z2.",
-      main:[{label:"Ogrevanje",val:"10–15 min Z1 lahkotno"},{label:"Glavni del",val:`${content} — menjaj Z2/Z3 z vzponi`},{label:"Priporočilo",val:"Valovita trasa z resničnimi vzponi"},{label:"Prehrana",val:"Bar ali gel vsakih 45–60 min"}] };
-    return { note:"Na vzponih menjaj Z2→Z3, na ravnem ostaj Z2. Navajaj telo na menjave intenzivnosti.",
-      main:[{label:"Ogrevanje",val:"10 min Z1"},{label:"Glavni del",val:`${content} — valovit teren, menjaj Z2/Z3`},{label:"Priporočilo",val:"Čim bolj na terenu s pravimi vzponi"}] };
-  }
-  if (t === "GORSKI DAN") {
-    if (isBike) return { note:"MTB tura kot nadomestek gorskega dne. Cilj: čas na vzponih in skupna obremenitev.",
-      warmup:"15 min lahkotno vrtenje Z1",
-      main:[{label:"Trajanje",val:content},{label:"Strategija vzponov",val:"Konstanten pritisk na pedala, ne prehitro"},{label:"Strategija spustov",val:"Tehnično, aktivno — MTB spusti so napor"},{label:"Prehrana",val:"Bar ali gel vsakih 45 min, 500–600ml/h"},{label:"Opomba",val:"MTB tura je odlična alternativa — vzdržljivostni stimulus primerljiv teku"}],
-      cooldown:"10 min lahkotno vrtenje + raztezanje: kolki, kvadriceps, hrbet" };
-    return { note:"Najpomembnejši trening tedna. Tempo ni cilj — D+ in čas na nogah sta cilj. Hodi strme vzpone (>20%), teci ravnine.",
-      warmup:"15 min lahek tek ali hoja do vznožja",
-      main:[{label:"Razdalja / čas",val:content},{label:"Strategija vzponov",val:"Kratki koraki, rahel nagib naprej, roke/palice aktivno"},{label:"Strategija spustov",val:"Aktivna kolena, ne zaviraj z zategnjenimi kolki"},{label:"Prehrana",val:"Gel ali bar vsakih 40–45 min, 400–500ml/h"},{label:"Oprema",val:"Tekaške palice — prihranijo 25–30% energije na vzponih"}],
-      cooldown:"10 min raztezanje — mečice, kvadriceps, zadnja stegna" };
-  }
-  if (t === "Back-to-back") {
-    if (isBike) return { note:"Lahkotno kolesarjenje na utrujenih nogah — simulira dan 2 dirke. Strogo Z1.",
-      main:[{label:"Trajanje",val:content},{label:"Intenzivnost",val:"Strogo Z1 — lahkotno vrtenje, HR < 130"},{label:"Namen",val:"Pretok krvi, obnova, prilagoditev na utrujenost"},{label:"Priporočilo",val:"Raje prenizko kot previsoko"}] };
-    return { note:"Tek na utrujenih nogah od včeraj — točno to te čaka na dirki. Strogo Z1.",
-      main:[{label:"Trajanje",val:content},{label:"Intenzivnost",val:"Strogo Z1 — če greš višje, upočasni brez izjeme"},{label:"Fokus",val:"Tehnika hoje/teka pri utrujenosti — to je pravi trening"}] };
-  }
-  if (t === "Dolg trening") {
-    if (isBike) return { note:"Dolgo kolesarjenje Z2 — aerobna baza na kolesu. Enakovreden nadomestek dolgega teka.",
-      main:[{label:"Trajanje",val:content},{label:"Intenzivnost",val:"Z2 — pogovorni tempo, konstanten ritem"},{label:"Priporočilo",val:"Valovita trasa, izogni se dolgim ravninam"},{label:"Prehrana",val:"Bar ali gel vsakih 45–60 min, 500ml/h"},{label:"Hidratacija",val:"Pij preden si žejen — na kolesu lažje pozabiš"}] };
-    return { note:"Osnova vzdržljivosti. Nikoli ne hiti — bolje predolg Z2 kot kratek Z3.",
-      main:[{label:"Razdalja",val:content},{label:"Intenzivnost",val:"Z2 — lahek pogovorni tempo"},{label:"Prehrana",val:"Začni jesti po 30–40 min, nato vsakih 40 min"},{label:"Hidratacija",val:"400–500ml/h, dodaj sol pri vročini"}] };
-  }
-  if (t === "Aktivno" || t === "Regeneracija") return {
-    note: isBike ? "Lahkotno kolesarjenje za regeneracijo. Nizek odpor, visoki obrati." : "Regeneracija je del treninga. Če se slabo počutiš, skrajšaj ali izpusti. HR < 130.",
-    main:[{label:"Trajanje",val:content},{label:"Intenzivnost",val:isBike?"Strogo Z1 — lahkotno vrtenje, HR < 130, visoki obrati":"Strogo Z1 — pogovor brez napora"},{label:"Namen",val:"Pretok krvi in obnova, ne adaptacija"}],
+
+  if (t === "Aerobno" || t === "Spec. aerobno" || t === "Spec. vzdržl.") return {
+    note:"Aerobna gradnja. Večina treninga naj ostane v Z2; hitrejši odseki so dodatek in nikoli ne smejo spremeniti treninga v tekmo.",
+    main:[
+      {label:"Glavni del",val:content},
+      {label:"Intenzivnost",val:"Z2 kot osnova; Z3 le na načrtovanih odsekih"},
+      {label:"Kontrola",val:"Lahko govoriš v kratkih stavkih. Če se ritem razbije, upočasni."},
+      {label:"Prehrana",val:"Pri treningih >90 min začni jesti že v prvi uri; pri krajših po potrebi."}
+    ],
+    cooldown:"5–10 min zelo lahkotno"
+  };
+
+  if (t === "Dolg trail") return {
+    note:"Najpomembnejši trening tedna. Cilj ni hitrost, ampak čas na nogah, D+, spusti in sposobnost jesti/piti v gibanju.",
+    warmup:isBike?"15 min lahkotno vrtenje Z1":"15 min lahkoten tek/hoja",
+    main:[
+      {label:"Trajanje",val:content},
+      {label:"Intenzivnost",val:"Z2 večino časa; strme vzpone mirno hodi"},
+      {label:"Vzponi",val:"Kratki koraki, roke/palice aktivno; ne presegaj načrtovanega napora"},
+      {label:"Spusti",val:"Vadba ekonomičnega, sproščenega teka brez stalnega zaviranja"},
+      {label:"Prehrana",val:"Približno 50–80 g OH/h; v maju/juniju postopno vadi tekmovalni vnos"},
+      {label:"Oprema",val:"Pri ključnih treningih uporabi tekmovalne čevlje, palice, nahrbtnik in čelno svetilko"}
+    ],
+    cooldown:"10 min hoja + tekočina in obrok z OH/proteini"
+  };
+
+  if (t === "Back-to-back") return {
+    note:"Dan 2 na utrujenih nogah. Kontrolirana simulacija ultra utrujenosti, ne dodaten tekmovalni napor.",
+    main:[
+      {label:"Trajanje",val:content},
+      {label:"Intenzivnost",val:isBike?"Z1–Z2, lahkotno vrtenje":"Z1–Z2; po potrebi preidi v hojo"},
+      {label:"Fokus",val:"Kakovost koraka in sposobnost umirjenega gibanja na obremenjenih nogah"},
+      {label:"Pravilo",val:"Če je utrujenost nenavadna ali tehnika razpada, trening skrajšaj ali zamenjaj za kolo"}
+    ]
+  };
+
+  if (t === "Nočni spec.") return {
+    note:"Nočni trening za K24: čelna svetilka, navigacija, oblačila in prehrana naj postanejo avtomatika. Začni mirno.",
+    main:[
+      {label:"Trajanje",val:content},
+      {label:"Intenzivnost",val:"Z1–Z2; prvi del posebej zadržano"},
+      {label:"Oprema",val:"Čelna svetilka + rezervna baterija, telefon/navigacija, vidljivost"},
+      {label:"Prehrana",val:"Vadba vnosa tudi po 23:00; nič novega na tekmi"},
+      {label:"Fokus",val:"Tek/hoja v temi, orientacija in občutek za ritem brez vizualne podpore"}
+    ],
+    cooldown:"5–10 min hoja + hidracija"
+  };
+
+  if (t === "Aktivacija") return {
+    note:"Aktivacija: prebudi noge, ne ustvarjaj utrujenosti. Vsi hitri odseki morajo imeti polno okrevanje.",
+    warmup:isBike?"10 min Z1":"10 min lahek tek Z1",
+    main:[{label:"Lahkotno",val:content},{label:"Cilj",val:"Občutek lahkotnih, odzivnih nog"},{label:"Pravilo",val:"Končaj z občutkom, da bi lahko naredil še en sklop"}],
+    cooldown:"5–10 min zelo lahkotno"
+  };
+
+  if (t === "Kratek tek/kolo") return {note:"Kratko in enostavno. Namen je ohranjati občutek za gibanje brez ustvarjanja utrujenosti.",main:[{label:"Trajanje",val:content},{label:"Intenzivnost",val:"Z1–Z2"},{label:"Fokus",val:"Sproščen korak / visoka kadenca na kolesu"}]};
+
+  if (t === "Aktivno" || t === "Regeneracija") return {note:"Regeneracija je del treninga. Če so noge težke ali boleče, skrajšaj ali izpusti.",main:[{label:"Trajanje",val:content},{label:"Intenzivnost",val:"Z1, brez lovljenja tempa"},{label:"Namen",val:"Pretok krvi, gibljivost in povratek v normalen občutek"}]};
+
+  if (t === "TEKMA" || t === "REGENERACIJA") return {
+    note:t==="TEKMA" ? "Tekmovalni dan. Plan je okvir; tempo prilagodi razmeram, počutju in stanju po prejšnjih tednih." : "Po tekmi ničesar ne dohitevaj. Najprej spanec, hidracija, normalna prehrana in nato lahek povratek.",
+    main:t==="TEKMA" ? [
+      {label:"Pred startom",val:"Oprema, prehrana in hidracija pripravljeni brez eksperimentiranja"},
+      {label:"Strategija",val:"Začni bolj zadržano, kot narekuje adrenalin"},
+      {label:"Pozornost",val:"Prehrana in hidracija po načrtu; pri dolgi tekmi razmišljaj v odsekih"}
+    ] : [
+      {label:"Prvi dnevi",val:"Počitek, hoja in zelo lahek spin"},
+      {label:"Vrnitev",val:"Tek šele, ko je normalen korak brez bolečine in izrazite togosti"}
+    ]
   };
   return null;
 }
 
 const RAW = [
-  {w:1,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:1,d:"TOR",t:"Vzdržljivost",a:"50' Z2",b:"75' Z2",z:"Z2"},{w:1,d:"SRE",t:"Moč",a:"30' Core + noge",b:"30' Core + noge",z:"Srednja"},{w:1,d:"ČET",t:"Vzdržljivost",a:"40' Z3",b:"60' Z3",z:"Z3"},{w:1,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:1,d:"SOB",t:"Dolg trening",a:"12km (gozd), Z2",b:"2h cestno, Z2",z:"Z2"},{w:1,d:"NED",t:"Aktivno",a:"45' lahka hoja",b:"45' lahka hoja",z:"Z1"},
-  {w:2,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:2,d:"TOR",t:"Intervali",a:"5x3' hrib, Z4",b:"5x5' moč (nizki obrati), Z4",z:"Z4"},{w:2,d:"SRE",t:"Moč",a:"30-45' vaje za trup in noge",b:"30-45' vaje za trup in noge",z:"Srednja"},{w:2,d:"ČET",t:"Vzdržljivost",a:"50' Z3",b:"80' Z3",z:"Z3"},{w:2,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:2,d:"SOB",t:"Dolg trening",a:"15km hribi, Z2",b:"2.5h kolo, Z2",z:"Z2"},{w:2,d:"NED",t:"Aktivno",a:"60' Z1",b:"60' Z1",z:"Z1"},
-  {w:3,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:3,d:"TOR",t:"Intervali",a:"6x3' hrib, Z4",b:"6x5' moč (nizki obrati), Z4",z:"Z4"},{w:3,d:"SRE",t:"Moč",a:"40' vaje za trup in noge",b:"40' vaje za trup in noge",z:"Srednja"},{w:3,d:"ČET",t:"Vzdržljivost",a:"60' Z3",b:"90' Z3",z:"Z3"},{w:3,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:3,d:"SOB",t:"Dolg trening",a:"18km hribi, Z2",b:"3h kolo, Z2",z:"Z2"},{w:3,d:"NED",t:"Aktivno",a:"60' Z1",b:"60' Z1",z:"Z1"},
-  {w:4,d:"PON",t:"Počitek",a:"Popoln počitek",b:"Popoln počitek",z:"/"},{w:4,d:"TOR",t:"Regeneracija",a:"30-40' Z1 (zelo lahkotno)",b:"45' Z1 (lahkotno vrtenje)",z:"Z1"},{w:4,d:"SRE",t:"Mobilnost",a:"Joga / Raztegovanje",b:"Joga / Raztegovanje",z:"Nizka"},{w:4,d:"ČET",t:"Regeneracija",a:"40' Z1",b:"40' Z1",z:"Z1"},{w:4,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:4,d:"SOB",t:"Aktivni sprehod",a:"90' lahkoten pohod",b:"90' kolesarjenje na kavo",z:"Z1"},{w:4,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
-  {w:5,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:5,d:"TOR",t:"Intervali",a:"5x4' hrib, Z4",b:"5x6' moč (nizki obrati), Z4",z:"Z4"},{w:5,d:"SRE",t:"Moč",a:"45' Moč (uteži)",b:"45' Moč (uteži)",z:"Srednja"},{w:5,d:"ČET",t:"Vzdržljivost",a:"70' Z3",b:"100' Z3",z:"Z3"},{w:5,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:5,d:"SOB",t:"Dolg trening",a:"22km hribi, Z2",b:"3.5h kolo, Z2",z:"Z2"},{w:5,d:"NED",t:"Aktivno",a:"70' Z1",b:"70' Z1",z:"Z1"},
-  {w:6,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:6,d:"TOR",t:"Intervali",a:"6x4' hrib, Z4",b:"6x6' moč (nizki obrati), Z4",z:"Z4"},{w:6,d:"SRE",t:"Moč",a:"45' Moč (uteži)",b:"45' Moč (uteži)",z:"Srednja"},{w:6,d:"ČET",t:"Vzdržljivost",a:"80' Z3",b:"120' Z3",z:"Z3"},{w:6,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:6,d:"SOB",t:"Dolg trening",a:"25km hribi, Z2",b:"4h kolo, Z2",z:"Z2"},{w:6,d:"NED",t:"Aktivno",a:"80' Z1",b:"80' Z1",z:"Z1"},
-  {w:7,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:7,d:"TOR",t:"Klanec",a:"4x8' klanec, Z4",b:"4x10' klanec, Z4",z:"Z4"},{w:7,d:"SRE",t:"Moč",a:"45' Moč (noge!)",b:"45' Moč (noge!)",z:"Srednja"},{w:7,d:"ČET",t:"Vzdržljivost",a:"90' (hribi), Z3",b:"3h kolo, Z3",z:"Z3"},{w:7,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:7,d:"SOB",t:"Dolg trening",a:"28km (1200m+), Z2",b:"4.5h kolo, Z2",z:"Z2"},{w:7,d:"NED",t:"Aktivno",a:"90' Z1",b:"90' Z1",z:"Z1"},
-  {w:8,d:"PON",t:"Počitek",a:"Popoln počitek",b:"Popoln počitek",z:"/"},{w:8,d:"TOR",t:"Regeneracija",a:"40' Z1 (zelo lahkotno)",b:"40' Z1 (lahkotno vrtenje)",z:"Z1"},{w:8,d:"SRE",t:"Mobilnost",a:"Joga / Raztegovanje",b:"Joga / Raztegovanje",z:"Nizka"},{w:8,d:"ČET",t:"Regeneracija",a:"45' Z1",b:"45' Z1",z:"Z1"},{w:8,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:8,d:"SOB",t:"Aktivni sprehod",a:"2h lahka hoja",b:"2h lahka hoja",z:"Z1"},{w:8,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
-  {w:9,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:9,d:"TOR",t:"Klanec",a:"5x8' klanec (močno), Z4",b:"5x10' klanec, Z4",z:"Z4"},{w:9,d:"SRE",t:"Moč",a:"45' funkcionalna moč",b:"45' funkcionalna moč",z:"Srednja"},{w:9,d:"ČET",t:"Spec. vzdržl.",a:"100' Z2",b:"3.5h Z2",z:"Z2/Z3"},{w:9,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:9,d:"SOB",t:"GORSKI DAN",a:"32km (1500m+ vzpona)",b:"5h (MTB tura)",z:"Z2"},{w:9,d:"NED",t:"Back-to-back",a:"60' na utrujene noge, Z1",b:"60' lahkotno vrtenje",z:"Z1"},
-  {w:10,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:10,d:"TOR",t:"Klanec",a:"3x15' klanec (močno), Z4",b:"3x20' klanec, Z4",z:"Z4"},{w:10,d:"SRE",t:"Moč",a:"45' funkcionalna moč",b:"45' funkcionalna moč",z:"Srednja"},{w:10,d:"ČET",t:"Spec. vzdržl.",a:"60' Z3",b:"90' Z3",z:"Z2/Z3"},{w:10,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:10,d:"SOB",t:"GORSKI DAN",a:"35km (1800m+ vzpona)",b:"5.5h (MTB tura)",z:"Z2"},{w:10,d:"NED",t:"Back-to-back",a:"60' na utrujene noge, Z1",b:"60' lahkotno vrtenje",z:"Z1"},
-  {w:11,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:11,d:"TOR",t:"Klanec",a:"6x8' klanec (močno), Z4",b:"6x12' klanec, Z4",z:"Z4"},{w:11,d:"SRE",t:"Moč",a:"45' funkcionalna moč",b:"45' funkcionalna moč",z:"Srednja"},{w:11,d:"ČET",t:"Spec. vzdržl.",a:"100' Z2/Z3",b:"4.0h Z2/Z3",z:"Z2/Z3"},{w:11,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:11,d:"SOB",t:"GORSKI DAN",a:"40km (1500m+ vzpona)",b:"7h (MTB tura)",z:"Z2"},{w:11,d:"NED",t:"Back-to-back",a:"60-90' na utrujene noge, Z1",b:"90' lahkotno vrtenje",z:"Z1"},
-  {w:12,d:"PON",t:"Počitek",a:"Popoln počitek",b:"Popoln počitek",z:"/"},{w:12,d:"TOR",t:"Regeneracija",a:"30-40' Z1 (zelo lahkotno)",b:"45' Z1 (lahkotno vrtenje)",z:"Z1"},{w:12,d:"SRE",t:"Mobilnost",a:"Joga / Raztegovanje",b:"Joga / Raztegovanje",z:"Nizka"},{w:12,d:"ČET",t:"Regeneracija",a:"30-40' Z1",b:"45' Z1",z:"Z1"},{w:12,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:12,d:"SOB",t:"Aktivni sprehod",a:"90' lahkoten pohod",b:"90' kolesarjenje na kavo",z:"Z1"},{w:12,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
-  {w:13,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:13,d:"TOR",t:"Klanec",a:"8x5' strmo, Z4",b:"8x8' močno, Z4",z:"Z4"},{w:13,d:"SRE",t:"Moč",a:"45' funkcionalna moč",b:"45' funkcionalna moč",z:"Srednja"},{w:13,d:"ČET",t:"Spec. vzdržl.",a:"100' Z2",b:"3.5h Z2",z:"Z2/Z3"},{w:13,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:13,d:"SOB",t:"GORSKI DAN",a:"45km (2500m+ vzpona)",b:"6.5h (MTB tura)",z:"Z2"},{w:13,d:"NED",t:"Back-to-back",a:"90' na utrujene noge, Z1",b:"90' lahkotno vrtenje",z:"Z1"},
-  {w:14,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:14,d:"TOR",t:"Klanec",a:"5x8' klanec (močno), Z4",b:"5x12' klanec, Z4",z:"Z4"},{w:14,d:"SRE",t:"Moč",a:"45' funkcionalna moč",b:"45' funkcionalna moč",z:"Srednja"},{w:14,d:"ČET",t:"Spec. vzdržl.",a:"90' Z2/Z3",b:"3.5h Z2/Z3",z:"Z2/Z3"},{w:14,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:14,d:"SOB",t:"GORSKI DAN",a:"35km (1500m+ vzpona)",b:"6h (MTB tura)",z:"Z2"},{w:14,d:"NED",t:"Back-to-back",a:"60-90' na utrujene noge, Z1",b:"90' lahkotno vrtenje",z:"Z1"},
-  {w:15,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:15,d:"TOR",t:"Klanec",a:"2x30' klanec, Z4",b:"2x45' klanec, Z4",z:"Z4"},{w:15,d:"SRE",t:"Moč",a:"45' funkcionalna moč",b:"45' funkcionalna moč",z:"Srednja"},{w:15,d:"ČET",t:"Spec. vzdržl.",a:"120' Z2",b:"4h Z2",z:"Z2/Z3"},{w:15,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:15,d:"SOB",t:"GORSKI DAN",a:"50km (Trasa! 2500m+ vzpona)",b:"7h (MTB tura)",z:"Z2"},{w:15,d:"NED",t:"Back-to-back",a:"2h na utrujene noge, Z1",b:"2h lahkotno vrtenje",z:"Z1"},
-  {w:16,d:"PON",t:"Počitek",a:"Popoln počitek",b:"Popoln počitek",z:"/"},{w:16,d:"TOR",t:"Regeneracija",a:"30-40' Z1 (zelo lahkotno)",b:"45' Z1 (lahkotno vrtenje)",z:"Z1"},{w:16,d:"SRE",t:"Mobilnost",a:"Joga / Raztegovanje",b:"Joga / Raztegovanje",z:"Nizka"},{w:16,d:"ČET",t:"Regeneracija",a:"30-40' Z1",b:"45' Z1",z:"Z1"},{w:16,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:16,d:"SOB",t:"Aktivni sprehod",a:"90' lahkoten pohod",b:"90' kolesarjenje na kavo",z:"Z1"},{w:16,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
-  {w:17,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:17,d:"TOR",t:"Klanec",a:"4x8' klanec (močno), Z4",b:"4x12' klanec, Z4",z:"Z4"},{w:17,d:"SRE",t:"Moč",a:"45' funkcionalna moč",b:"45' funkcionalna moč",z:"Srednja"},{w:17,d:"ČET",t:"Spec. vzdržl.",a:"80' Z2/Z3",b:"3.0h Z2/Z3",z:"Z2/Z3"},{w:17,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:17,d:"SOB",t:"GORSKI DAN",a:"30km (1500m+ vzpona)",b:"5h (MTB tura)",z:"Z2"},{w:17,d:"NED",t:"Back-to-back",a:"60-90' na utrujene noge, Z1",b:"90' lahkotno vrtenje",z:"Z1"},
-  {w:18,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:18,d:"TOR",t:"Aktivacija",a:"4x10' Z4",b:"4x15' Z4",z:"Z4"},{w:18,d:"SRE",t:"Moč",a:"45' Zadnja moč",b:"45' Zadnja moč",z:"Srednja"},{w:18,d:"ČET",t:"Vzdržljivost",a:"70' Z3",b:"2h kolo, Z3",z:"Z3"},{w:18,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:18,d:"SOB",t:"Dolg trening",a:"55-60km (ZADNJA!)",b:"55-60km (ZADNJA!)",z:"Z2"},{w:18,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
-  {w:19,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:19,d:"TOR",t:"Vzdržljivost",a:"45' Z2 (Taper 1)",b:"45' Z2 (Taper 1)",z:"Z2"},{w:19,d:"SRE",t:"Mobilnost",a:"Razteg / Core",b:"Razteg / Core",z:"Nizka"},{w:19,d:"ČET",t:"Kratek tek/kolo",a:"60' Z2",b:"90' Z2",z:"Z2"},{w:19,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:19,d:"SOB",t:"Dolg (zmanjšano)",a:"20km lahkotno",b:"20km lahkotno",z:"Z2"},{w:19,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
-  {w:20,d:"PON",t:"Počitek",a:"Popoln počitek",b:"Popoln počitek",z:"/"},{w:20,d:"TOR",t:"Regeneracija",a:"30-40' Z1 (zelo lahkotno)",b:"45' Z1 (lahkotno vrtenje)",z:"Z1"},{w:20,d:"SRE",t:"Mobilnost",a:"Joga / Raztegovanje",b:"Joga / Raztegovanje",z:"Nizka"},{w:20,d:"ČET",t:"Regeneracija",a:"30-40' Z1",b:"45' Z1",z:"Z1"},{w:20,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:20,d:"SOB",t:"Aktivni sprehod",a:"90' lahkoten pohod",b:"90' kolesarjenje na kavo",z:"Z1"},{w:20,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
-  {w:21,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:21,d:"TOR",t:"Aktivacija",a:"40' z 2x5' Z4",b:"40' z 2x5' Z4",z:"Z4"},{w:21,d:"SRE",t:"Mobilnost",a:"Razteg",b:"Razteg",z:"Nizka"},{w:21,d:"ČET",t:"Kratek tek/kolo",a:"30' Z1",b:"30' Z1",z:"Z1"},{w:21,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:21,d:"SOB",t:"Dolg (zmanjšano)",a:"10km (pregled opreme)",b:"10km (pregled opreme)",z:"Z1"},{w:21,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
-  {w:22,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:22,d:"TOR",t:"Aktivacija",a:"20' aktivacija",b:"20' aktivacija",z:"Z2"},{w:22,d:"SRE",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},{w:22,d:"ČET",t:"Preteg",a:"15' pretegi",b:"15' pretegi",z:"Z1"},{w:22,d:"PET",t:"Počitek",a:"Priprava opreme",b:"Priprava opreme",z:"/"},{w:22,d:"SOB",t:"TEKMA",a:"JULIAN ALPS 80K! 🏁",b:"/",z:"MAX"},{w:22,d:"NED",t:"REGENERACIJA",a:"Počitek / Praznovanje 🎉",b:"Počitek",z:"/"},
+  {w:1,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:1,d:"TOR",t:"Intervali",a:"6×4′ hrib @Z4, 2–3′ spust/hoja",b:"6×6′ klanec @Z4, 50–60 rpm",z:"Z4"},
+  {w:1,d:"SRE",t:"Moč",a:"35′ osnovna moč + trup",b:"35′ osnovna moč + trup",z:"Srednja"},
+  {w:1,d:"ČET",t:"Aerobno",a:"75′ Z2",b:"2:00 h Z2",z:"Z2"},
+  {w:1,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:1,d:"SOB",t:"Dolg trail",a:"2:45 h trail, 700–1000 m D+, Z2",b:"4:00 h kolo, 900–1200 m D+",z:"Z2"},
+  {w:1,d:"NED",t:"Back-to-back",a:"60′ Z1 na utrujene noge",b:"1:30 h Z1 kolo",z:"Z1"},
+  {w:2,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:2,d:"TOR",t:"Intervali",a:"8×3′ hrib @Z4, 2–3′ spust/hoja",b:"8×5′ klanec @Z4, 50–60 rpm",z:"Z4"},
+  {w:2,d:"SRE",t:"Moč",a:"35′ osnovna moč + trup",b:"35′ osnovna moč + trup",z:"Srednja"},
+  {w:2,d:"ČET",t:"Aerobno",a:"75′ Z2",b:"2:00 h Z2",z:"Z2"},
+  {w:2,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:2,d:"SOB",t:"Dolg trail",a:"3:00 h trail, 800–1100 m D+, Z2",b:"4:30 h kolo, 1000–1400 m D+",z:"Z2"},
+  {w:2,d:"NED",t:"Back-to-back",a:"75′ Z1 na utrujene noge",b:"1:30 h Z1 kolo",z:"Z1"},
+  {w:3,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:3,d:"TOR",t:"Prag/klanec",a:"5×5′ vzpon @Z4, 3′ lahkotno",b:"5×8′ klanec @Z4, 60 rpm",z:"Z4"},
+  {w:3,d:"SRE",t:"Moč",a:"40′ moč nog + trup",b:"40′ moč nog + trup",z:"Srednja"},
+  {w:3,d:"ČET",t:"Aerobno",a:"90′ Z2",b:"2:15 h Z2",z:"Z2"},
+  {w:3,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:3,d:"SOB",t:"Dolg trail",a:"3:30 h trail, 900–1300 m D+, zadnja 30′ Z2→Z3",b:"5:00 h kolo, valovito, 1200–1500 m D+",z:"Z2/Z3"},
+  {w:3,d:"NED",t:"Back-to-back",a:"90′ Z1",b:"1:45 h Z1 kolo",z:"Z1"},
+  {w:4,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:4,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:4,d:"SRE",t:"Moč",a:"35′ lažja moč + mobilnost",b:"35′ lažja moč + mobilnost",z:"Srednja"},
+  {w:4,d:"ČET",t:"Spec. aerobno",a:"90′ Z2 z 4×8′ Z3",b:"2:30 h Z2 z 4×10′ Z3",z:"Z2/Z3"},
+  {w:4,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:4,d:"SOB",t:"Dolg trail",a:"4:00 h trail, 1100–1500 m D+, prehrana 50–70 g OH/h",b:"5:30 h kolo, 1300–1700 m D+, prehrana 60–80 g OH/h",z:"Z2"},
+  {w:4,d:"NED",t:"Back-to-back",a:"2:00 h Z1–Z2, zelo kontrolirano",b:"2:30 h lahkotno kolo",z:"Z1/Z2"},
+  {w:5,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:5,d:"TOR",t:"Aktivacija",a:"40′ Z1 + 4×20″ pospešek",b:"60′ Z1 + 4×30″ višji obrati",z:"Z1/Z2"},
+  {w:5,d:"SRE",t:"Mobilnost",a:"25′ mobilnost + meča",b:"25′ mobilnost + meča",z:"Nizka"},
+  {w:5,d:"ČET",t:"Regeneracija",a:"45′ Z1",b:"60′ Z1 kolo",z:"Z1"},
+  {w:5,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:5,d:"SOB",t:"Dolg trail",a:"2:00 h sproščeno, Z2",b:"3:00 h sproščeno kolo",z:"Z2"},
+  {w:5,d:"NED",t:"Počitek",a:"Počitek / sprehod",b:"Počitek / kratek sprehod",z:"/"},
+  {w:6,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:6,d:"TOR",t:"Aktivacija",a:"45′ z 4×3′ Z3/Z4, polno okrevanje",b:"60′ z 4×4′ Z3/Z4",z:"Z2/Z4"},
+  {w:6,d:"SRE",t:"Mobilnost",a:"20′ mobilnost",b:"20′ mobilnost",z:"Nizka"},
+  {w:6,d:"ČET",t:"Kratek tek/kolo",a:"45′ Z1–Z2",b:"60′ Z1–Z2",z:"Z1/Z2"},
+  {w:6,d:"PET",t:"Počitek",a:"Počitek + priprava opreme",b:"Počitek + priprava opreme",z:"/"},
+  {w:6,d:"SOB",t:"TEKMA",a:"GO4Trail 64 km 🏁 · 7. 11. 2026 · start 07:30 · tekma B",b:"GO4Trail 64 km 🏁 · start 07:30 · tekma; kolo ni zamenjava",z:"MAX"},
+  {w:6,d:"NED",t:"REGENERACIJA",a:"Počitek / sprehod / hidracija",b:"Počitek ali 30′ zelo lahkotno",z:"/"},
+  {w:7,d:"PON",t:"Počitek",a:"Popoln počitek",b:"Popoln počitek",z:"/"},
+  {w:7,d:"TOR",t:"Regeneracija",a:"30–40′ Z1 ali sprehod",b:"45–60′ Z1 kolo",z:"Z1"},
+  {w:7,d:"SRE",t:"Mobilnost",a:"20–30′ mobilnost",b:"20–30′ mobilnost",z:"Nizka"},
+  {w:7,d:"ČET",t:"Regeneracija",a:"30–45′ Z1, samo če so noge OK",b:"60′ Z1",z:"Z1"},
+  {w:7,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:7,d:"SOB",t:"Aktivno",a:"90′ hoja/pohod, brez pritiska",b:"90′ lahkotno kolo",z:"Z1"},
+  {w:7,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:8,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:8,d:"TOR",t:"Kratek tek/kolo",a:"45–60′ Z1–Z2 + 4×20″",b:"75′ Z1–Z2 + 4×30″",z:"Z2"},
+  {w:8,d:"SRE",t:"Moč",a:"30′ zmerna moč",b:"30′ zmerna moč",z:"Srednja"},
+  {w:8,d:"ČET",t:"Aerobno",a:"60′ Z2",b:"90′ Z2",z:"Z2"},
+  {w:8,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:8,d:"SOB",t:"Dolg trail",a:"2:30 h trail, Z2, brez lovljenja D+",b:"4:00 h kolo Z2",z:"Z2"},
+  {w:8,d:"NED",t:"Aktivno",a:"60′ Z1",b:"90′ Z1 kolo",z:"Z1"},
+  {w:9,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:9,d:"TOR",t:"Intervali",a:"6×3′ hrib @Z4",b:"6×5′ klanec @Z4, 50–60 rpm",z:"Z4"},
+  {w:9,d:"SRE",t:"Moč",a:"35–45′ moč nog + trup",b:"35–45′ moč nog + trup",z:"Srednja"},
+  {w:9,d:"ČET",t:"Aerobno",a:"60–75′ Z2",b:"90–105′ Z2",z:"Z2"},
+  {w:9,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:9,d:"SOB",t:"Dolg trail",a:"2:30–3:00 h trail, Z2",b:"4:00 h kolo, Z2, 800–1200 m D+",z:"Z2"},
+  {w:9,d:"NED",t:"Aktivno",a:"45–60′ Z1",b:"60–75′ Z1",z:"Z1"},
+  {w:10,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:10,d:"TOR",t:"Intervali",a:"6×3′ hrib @Z4",b:"6×5′ klanec @Z4, 50–60 rpm",z:"Z4"},
+  {w:10,d:"SRE",t:"Moč",a:"35–45′ moč nog + trup",b:"35–45′ moč nog + trup",z:"Srednja"},
+  {w:10,d:"ČET",t:"Aerobno",a:"60–75′ Z2",b:"90–105′ Z2",z:"Z2"},
+  {w:10,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:10,d:"SOB",t:"Dolg trail",a:"2:30–3:00 h trail, Z2",b:"4:00 h kolo, Z2, 800–1200 m D+",z:"Z2"},
+  {w:10,d:"NED",t:"Aktivno",a:"45–60′ Z1",b:"60–75′ Z1",z:"Z1"},
+  {w:11,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:11,d:"TOR",t:"Intervali",a:"6×3′ hrib @Z4",b:"6×5′ klanec @Z4, 50–60 rpm",z:"Z4"},
+  {w:11,d:"SRE",t:"Moč",a:"35–45′ moč nog + trup",b:"35–45′ moč nog + trup",z:"Srednja"},
+  {w:11,d:"ČET",t:"Aerobno",a:"60–75′ Z2",b:"90–105′ Z2",z:"Z2"},
+  {w:11,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:11,d:"SOB",t:"Dolg trail",a:"2:30–3:00 h trail, Z2",b:"4:00 h kolo, Z2, 800–1200 m D+",z:"Z2"},
+  {w:11,d:"NED",t:"Aktivno",a:"45–60′ Z1",b:"60–75′ Z1",z:"Z1"},
+  {w:12,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:12,d:"TOR",t:"Prag/klanec",a:"5×5′ vzpon @Z4, 3′ lahkotno",b:"5×8′ klanec @Z4, 60–70 rpm",z:"Z4"},
+  {w:12,d:"SRE",t:"Moč",a:"40′ moč nog + trup",b:"40′ moč nog + trup",z:"Srednja"},
+  {w:12,d:"ČET",t:"Aerobno",a:"75–90′ Z2",b:"2:00–2:15 h Z2",z:"Z2"},
+  {w:12,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:12,d:"SOB",t:"Dolg trail",a:"3:00–3:30 h trail, 800–1200 m D+, Z2",b:"4:30–5:00 h kolo, valovito, 1000–1500 m D+",z:"Z2"},
+  {w:12,d:"NED",t:"Back-to-back",a:"75–90′ Z1 na utrujene noge",b:"1:30–1:45 h zelo lahkotno kolo",z:"Z1"},
+  {w:13,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:13,d:"TOR",t:"Klanec",a:"5×3′ hrib @Z3, lahkotno",b:"5×5′ klanec @Z3",z:"Z3"},
+  {w:13,d:"SRE",t:"Moč",a:"35–45′ moč nog + trup",b:"35–45′ moč nog + trup",z:"Srednja"},
+  {w:13,d:"ČET",t:"Aerobno",a:"60′ Z2",b:"90′ Z2",z:"Z2"},
+  {w:13,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:13,d:"SOB",t:"Dolg trail",a:"2:30 h lahkotno, Z2",b:"4:00 h kolo Z2",z:"Z2"},
+  {w:13,d:"NED",t:"Aktivno",a:"60′ Z1",b:"90′ Z1 kolo",z:"Z1"},
+  {w:14,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:14,d:"TOR",t:"Intervali",a:"6×3′ hrib @Z4",b:"6×5′ klanec @Z4, 50–60 rpm",z:"Z4"},
+  {w:14,d:"SRE",t:"Moč",a:"35–45′ moč nog + trup",b:"35–45′ moč nog + trup",z:"Srednja"},
+  {w:14,d:"ČET",t:"Aerobno",a:"60–75′ Z2",b:"90–105′ Z2",z:"Z2"},
+  {w:14,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:14,d:"SOB",t:"Dolg trail",a:"2:30–3:00 h trail, Z2",b:"4:00 h kolo, Z2, 800–1200 m D+",z:"Z2"},
+  {w:14,d:"NED",t:"Aktivno",a:"45–60′ Z1",b:"60–75′ Z1",z:"Z1"},
+  {w:15,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:15,d:"TOR",t:"Prag/klanec",a:"5×5′ vzpon @Z4, 3′ lahkotno",b:"5×8′ klanec @Z4, 60–70 rpm",z:"Z4"},
+  {w:15,d:"SRE",t:"Moč",a:"40′ moč nog + trup",b:"40′ moč nog + trup",z:"Srednja"},
+  {w:15,d:"ČET",t:"Aerobno",a:"75–90′ Z2",b:"2:00–2:15 h Z2",z:"Z2"},
+  {w:15,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:15,d:"SOB",t:"Dolg trail",a:"3:00–3:30 h trail, 800–1200 m D+, Z2",b:"4:30–5:00 h kolo, valovito, 1000–1500 m D+",z:"Z2"},
+  {w:15,d:"NED",t:"Back-to-back",a:"75–90′ Z1 na utrujene noge",b:"1:30–1:45 h zelo lahkotno kolo",z:"Z1"},
+  {w:16,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:16,d:"TOR",t:"Prag/klanec",a:"5×5′ vzpon @Z4, 3′ lahkotno",b:"5×8′ klanec @Z4, 60–70 rpm",z:"Z4"},
+  {w:16,d:"SRE",t:"Moč",a:"40′ moč nog + trup",b:"40′ moč nog + trup",z:"Srednja"},
+  {w:16,d:"ČET",t:"Aerobno",a:"75–90′ Z2",b:"2:00–2:15 h Z2",z:"Z2"},
+  {w:16,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:16,d:"SOB",t:"Dolg trail",a:"3:00–3:30 h trail, 800–1200 m D+, Z2",b:"4:30–5:00 h kolo, valovito, 1000–1500 m D+",z:"Z2"},
+  {w:16,d:"NED",t:"Back-to-back",a:"75–90′ Z1 na utrujene noge",b:"1:30–1:45 h zelo lahkotno kolo",z:"Z1"},
+  {w:17,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:17,d:"TOR",t:"Klanec",a:"5×3′ hrib @Z3, lahkotno",b:"5×5′ klanec @Z3",z:"Z3"},
+  {w:17,d:"SRE",t:"Moč",a:"35–45′ moč nog + trup",b:"35–45′ moč nog + trup",z:"Srednja"},
+  {w:17,d:"ČET",t:"Aerobno",a:"60′ Z2",b:"90′ Z2",z:"Z2"},
+  {w:17,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:17,d:"SOB",t:"Dolg trail",a:"2:30 h lahkotno, Z2",b:"4:00 h kolo Z2",z:"Z2"},
+  {w:17,d:"NED",t:"Aktivno",a:"60′ Z1",b:"90′ Z1 kolo",z:"Z1"},
+  {w:18,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:18,d:"TOR",t:"Prag/klanec",a:"5×5′ vzpon @Z4, 3′ lahkotno",b:"5×8′ klanec @Z4, 60–70 rpm",z:"Z4"},
+  {w:18,d:"SRE",t:"Moč",a:"40′ moč nog + trup",b:"40′ moč nog + trup",z:"Srednja"},
+  {w:18,d:"ČET",t:"Aerobno",a:"75–90′ Z2",b:"2:00–2:15 h Z2",z:"Z2"},
+  {w:18,d:"PET",t:"Počitek",a:"Počitek ali 15′ mobilnost",b:"Počitek ali 15′ mobilnost",z:"/"},
+  {w:18,d:"SOB",t:"Dolg trail",a:"3:00–3:30 h trail, 800–1200 m D+, Z2",b:"4:30–5:00 h kolo, valovito, 1000–1500 m D+",z:"Z2"},
+  {w:18,d:"NED",t:"Back-to-back",a:"75–90′ Z1 na utrujene noge",b:"1:30–1:45 h zelo lahkotno kolo",z:"Z1"},
+  {w:19,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:19,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4, 3′ lahkotno",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:19,d:"SRE",t:"Moč",a:"35′ moč + trup",b:"35′ moč + trup",z:"Srednja"},
+  {w:19,d:"ČET",t:"Spec. vzdržl.",a:"90–105′ Z2 z 4×10′ Z3 na vzponih",b:"2:30–3:00 h Z2 z 4×12′ Z3",z:"Z2/Z3"},
+  {w:19,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:19,d:"SOB",t:"Dolg trail",a:"4:00 h trail, 1000–1400 m D+, Z2",b:"5:30–6:00 h kolo, 1300–1700 m D+, Z2",z:"Z2"},
+  {w:19,d:"NED",t:"Back-to-back",a:"90′ Z1–Z2 na utrujene noge",b:"2:00 h Z1 kolo",z:"Z1/Z2"},
+  {w:20,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:20,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4, 3′ lahkotno",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:20,d:"SRE",t:"Moč",a:"35′ moč + trup",b:"35′ moč + trup",z:"Srednja"},
+  {w:20,d:"ČET",t:"Spec. vzdržl.",a:"90–105′ Z2 z 4×10′ Z3 na vzponih",b:"2:30–3:00 h Z2 z 4×12′ Z3",z:"Z2/Z3"},
+  {w:20,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:20,d:"SOB",t:"Dolg trail",a:"4:00 h trail, 1000–1400 m D+, Z2",b:"5:30–6:00 h kolo, 1300–1700 m D+, Z2",z:"Z2"},
+  {w:20,d:"NED",t:"Back-to-back",a:"90′ Z1–Z2 na utrujene noge",b:"2:00 h Z1 kolo",z:"Z1/Z2"},
+  {w:21,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:21,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4, 3′ lahkotno",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:21,d:"SRE",t:"Moč",a:"35′ moč + trup",b:"35′ moč + trup",z:"Srednja"},
+  {w:21,d:"ČET",t:"Spec. vzdržl.",a:"90–105′ Z2 z 4×10′ Z3 na vzponih",b:"2:30–3:00 h Z2 z 4×12′ Z3",z:"Z2/Z3"},
+  {w:21,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:21,d:"SOB",t:"Dolg trail",a:"4:30 h trail, 1200–1700 m D+, zadnja 45′ Z2/Z3",b:"6:00–6:30 h kolo, 1500–2000 m D+, Z2/Z3",z:"Z2"},
+  {w:21,d:"NED",t:"Back-to-back",a:"2:00 h Z1–Z2",b:"2:30 h Z1 kolo",z:"Z1/Z2"},
+  {w:22,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:22,d:"TOR",t:"Klanec",a:"5×4′ vzpon @Z3/Z4, kontrolirano",b:"5×7′ klanec @Z3/Z4",z:"Z3/Z4"},
+  {w:22,d:"SRE",t:"Moč",a:"30–35′ vzdrževanje moči",b:"30–35′ vzdrževanje moči",z:"Srednja"},
+  {w:22,d:"ČET",t:"Aerobno",a:"75′ Z2",b:"2:00 h Z2",z:"Z2"},
+  {w:22,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:22,d:"SOB",t:"Dolg trail",a:"3:00 h lahkotno, 700–1000 m D+",b:"5:00 h kolo Z2, 1000–1400 m D+",z:"Z2"},
+  {w:22,d:"NED",t:"Aktivno",a:"75′ Z1 ali sprehod",b:"2:00 h Z1 kolo",z:"Z1"},
+  {w:23,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:23,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4, 3′ lahkotno",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:23,d:"SRE",t:"Moč",a:"35′ moč + trup",b:"35′ moč + trup",z:"Srednja"},
+  {w:23,d:"ČET",t:"Spec. vzdržl.",a:"90–105′ Z2 z 4×10′ Z3 na vzponih",b:"2:30–3:00 h Z2 z 4×12′ Z3",z:"Z2/Z3"},
+  {w:23,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:23,d:"SOB",t:"Dolg trail",a:"4:30 h trail, 1200–1700 m D+, zadnja 45′ Z2/Z3",b:"6:00–6:30 h kolo, 1500–2000 m D+, Z2/Z3",z:"Z2"},
+  {w:23,d:"NED",t:"Back-to-back",a:"2:00 h Z1–Z2",b:"2:30 h Z1 kolo",z:"Z1/Z2"},
+  {w:24,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:24,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4, 3′ lahkotno",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:24,d:"SRE",t:"Moč",a:"35′ moč + trup",b:"35′ moč + trup",z:"Srednja"},
+  {w:24,d:"ČET",t:"Spec. vzdržl.",a:"90–105′ Z2 z 4×10′ Z3 na vzponih",b:"2:30–3:00 h Z2 z 4×12′ Z3",z:"Z2/Z3"},
+  {w:24,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:24,d:"SOB",t:"Dolg trail",a:"5:00 h trail, 1300–1800 m D+, 60–80 g OH/h",b:"6:30–7:00 h kolo, 1700–2200 m D+, 70–90 g OH/h",z:"Z2"},
+  {w:24,d:"NED",t:"Back-to-back",a:"2:00–2:30 h Z1",b:"2:30–3:00 h Z1 kolo",z:"Z1/Z2"},
+  {w:25,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:25,d:"TOR",t:"Klanec",a:"5×4′ vzpon @Z3/Z4, kontrolirano",b:"5×7′ klanec @Z3/Z4",z:"Z3/Z4"},
+  {w:25,d:"SRE",t:"Moč",a:"30–35′ vzdrževanje moči",b:"30–35′ vzdrževanje moči",z:"Srednja"},
+  {w:25,d:"ČET",t:"Aerobno",a:"75′ Z2",b:"2:00 h Z2",z:"Z2"},
+  {w:25,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:25,d:"SOB",t:"Dolg trail",a:"3:00 h lahkotno, 700–1000 m D+",b:"5:00 h kolo Z2, 1000–1400 m D+",z:"Z2"},
+  {w:25,d:"NED",t:"Aktivno",a:"75′ Z1 ali sprehod",b:"2:00 h Z1 kolo",z:"Z1"},
+  {w:26,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:26,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4, 3′ lahkotno",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:26,d:"SRE",t:"Moč",a:"35′ moč + trup",b:"35′ moč + trup",z:"Srednja"},
+  {w:26,d:"ČET",t:"Spec. vzdržl.",a:"90–105′ Z2 z 4×10′ Z3 na vzponih",b:"2:30–3:00 h Z2 z 4×12′ Z3",z:"Z2/Z3"},
+  {w:26,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:26,d:"SOB",t:"Dolg trail",a:"5:00 h trail, 1300–1800 m D+, 60–80 g OH/h",b:"6:30–7:00 h kolo, 1700–2200 m D+, 70–90 g OH/h",z:"Z2"},
+  {w:26,d:"NED",t:"Back-to-back",a:"2:00–2:30 h Z1",b:"2:30–3:00 h Z1 kolo",z:"Z1/Z2"},
+  {w:27,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:27,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4, 3′ lahkotno",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:27,d:"SRE",t:"Moč",a:"35′ moč + trup",b:"35′ moč + trup",z:"Srednja"},
+  {w:27,d:"ČET",t:"Spec. vzdržl.",a:"90–105′ Z2 z 4×10′ Z3 na vzponih",b:"2:30–3:00 h Z2 z 4×12′ Z3",z:"Z2/Z3"},
+  {w:27,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:27,d:"SOB",t:"Dolg trail",a:"5:00–5:30 h trail, 1500–2000 m D+, zadnja 60′ zelo kontrolirano",b:"7:00 h kolo, 1800–2300 m D+",z:"Z2"},
+  {w:27,d:"NED",t:"Back-to-back",a:"2:00 h Z1–Z2",b:"2:30 h Z1 kolo",z:"Z1/Z2"},
+  {w:28,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:28,d:"TOR",t:"Klanec",a:"4×5′ vzpon @Z4, brez izčrpavanja",b:"4×8′ klanec @Z4",z:"Z4"},
+  {w:28,d:"SRE",t:"Moč",a:"30′ vzdrževanje",b:"30′ vzdrževanje",z:"Srednja"},
+  {w:28,d:"ČET",t:"Spec. vzdržl.",a:"90′ Z2 z 3×10′ Z3",b:"2:30 h Z2 z 3×12′ Z3",z:"Z2/Z3"},
+  {w:28,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:28,d:"SOB",t:"Dolg trail",a:"4:00 h, 1200–1600 m D+, vadi prehrano/opremo",b:"6:00 h kolo, 1500–2000 m D+",z:"Z2"},
+  {w:28,d:"NED",t:"Back-to-back",a:"2:00 h zelo lahkotno",b:"2:30 h zelo lahkotno kolo",z:"Z1"},
+  {w:29,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:29,d:"TOR",t:"Klanec",a:"4×4′ vzpon @Z3/Z4, brez utrujanja",b:"4×6′ klanec @Z3/Z4",z:"Z3/Z4"},
+  {w:29,d:"SRE",t:"Moč",a:"25′ zelo lahka moč",b:"25′ zelo lahka moč",z:"Nizka"},
+  {w:29,d:"ČET",t:"Kratek tek/kolo",a:"60′ Z2",b:"90′ Z2",z:"Z2"},
+  {w:29,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:29,d:"SOB",t:"Dolg trail",a:"2:30 h Z2 + 6×20″ pospešek",b:"4:00 h kolo Z2",z:"Z2"},
+  {w:29,d:"NED",t:"Aktivno",a:"60′ Z1",b:"90′ Z1 kolo",z:"Z1"},
+  {w:30,d:"PON",t:"Počitek",a:"Počitek + priprava opreme",b:"Počitek + priprava opreme",z:"/"},
+  {w:30,d:"TOR",t:"Aktivacija",a:"40′ Z1–Z2 + 3×2′ Z3",b:"60′ Z1–Z2 + 3×3′ Z3",z:"Z2/Z3"},
+  {w:30,d:"SRE",t:"Mobilnost",a:"20′ mobilnost",b:"20′ mobilnost",z:"Nizka"},
+  {w:30,d:"ČET",t:"Kratek tek/kolo",a:"35′ Z1",b:"45′ Z1",z:"Z1"},
+  {w:30,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:30,d:"PET",t:"TEKMA",a:"UTVV 163 km 🏁 · 23. 4. 2027 · start 19:00 · OPCIJSKO / kontrolirano",b:"UTVV 163 km 🏁 · start 19:00 · kolo NI alternativa",z:"MAX"},
+  {w:30,d:"NED",t:"REGENERACIJA",a:"Počitek / spanje / hidracija",b:"Počitek / zelo lahkotno",z:"/"},
+  {w:31,d:"PON",t:"Počitek",a:"Popoln počitek",b:"Popoln počitek",z:"/"},
+  {w:31,d:"TOR",t:"Regeneracija",a:"30–45′ Z1 ali hoja, samo če so noge OK",b:"45–60′ Z1 kolo",z:"Z1"},
+  {w:31,d:"SRE",t:"Mobilnost",a:"20–30′ mobilnost",b:"20–30′ mobilnost",z:"Nizka"},
+  {w:31,d:"ČET",t:"Regeneracija",a:"30–45′ Z1",b:"60′ Z1 kolo",z:"Z1"},
+  {w:31,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:31,d:"SOB",t:"Aktivno",a:"60–120′ hoja/pohod ali počitek",b:"90′ lahkotno kolo",z:"Z1"},
+  {w:31,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:32,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:32,d:"TOR",t:"Klanec",a:"5×5′ vzpon @Z4",b:"5×8′ klanec @Z4",z:"Z4"},
+  {w:32,d:"SRE",t:"Moč",a:"30′ vzdrževanje moči",b:"30′ vzdrževanje moči",z:"Srednja"},
+  {w:32,d:"ČET",t:"Spec. vzdržl.",a:"90′ Z2 + 4×8′ Z3",b:"2:30 h Z2 + 4×10′ Z3",z:"Z2/Z3"},
+  {w:32,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:32,d:"SOB",t:"Dolg trail",a:"3:30 h trail, 1000–1400 m D+, tehnični spusti",b:"5:00 h kolo, 1300–1700 m D+",z:"Z2"},
+  {w:32,d:"NED",t:"Back-to-back",a:"90′ Z1–Z2",b:"2:00 h Z1 kolo",z:"Z1/Z2"},
+  {w:33,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:33,d:"TOR",t:"Klanec",a:"6×6′ vzpon @Z4",b:"6×9′ klanec @Z4",z:"Z4"},
+  {w:33,d:"SRE",t:"Moč",a:"30′ moč + meča",b:"30′ moč + meča",z:"Srednja"},
+  {w:33,d:"ČET",t:"Spec. vzdržl.",a:"100′ Z2 z 5×8′ Z3 na klancu",b:"2:45 h Z2 z 5×10′ Z3",z:"Z2/Z3"},
+  {w:33,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:33,d:"SOB",t:"Dolg trail",a:"4:00 h, 1200–1600 m D+, fokus na spustih",b:"5:30–6:00 h kolo, 1500–1900 m D+",z:"Z2"},
+  {w:33,d:"NED",t:"Back-to-back",a:"2:00 h Z1–Z2",b:"2:30 h Z1 kolo",z:"Z1/Z2"},
+  {w:34,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:34,d:"TOR",t:"Klanec",a:"5×8′ vzpon @Z4, kontrolirano",b:"5×12′ klanec @Z4",z:"Z4"},
+  {w:34,d:"SRE",t:"Moč",a:"25–30′ vzdrževanje",b:"25–30′ vzdrževanje",z:"Srednja"},
+  {w:34,d:"ČET",t:"Spec. vzdržl.",a:"100′ Z2/Z3, vključuj dolge vzpone",b:"3:00 h Z2/Z3 na valovitem terenu",z:"Z2/Z3"},
+  {w:34,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:34,d:"SOB",t:"Dolg trail",a:"4:30–5:00 h trail, 1300–1800 m D+, vadi palice/prehrano",b:"6:00–6:30 h kolo, 1600–2100 m D+",z:"Z2"},
+  {w:34,d:"NED",t:"Back-to-back",a:"2:00–2:30 h Z1–Z2",b:"2:30–3:00 h Z1 kolo",z:"Z1/Z2"},
+  {w:35,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:35,d:"TOR",t:"Klanec",a:"5×8′ vzpon @Z4, kontrolirano",b:"5×12′ klanec @Z4",z:"Z4"},
+  {w:35,d:"SRE",t:"Moč",a:"25–30′ vzdrževanje",b:"25–30′ vzdrževanje",z:"Srednja"},
+  {w:35,d:"ČET",t:"Spec. vzdržl.",a:"100′ Z2/Z3, vključuj dolge vzpone",b:"3:00 h Z2/Z3 na valovitem terenu",z:"Z2/Z3"},
+  {w:35,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:35,d:"SOB",t:"Dolg trail",a:"4:30–5:00 h trail, 1300–1800 m D+, vadi palice/prehrano",b:"6:00–6:30 h kolo, 1600–2100 m D+",z:"Z2"},
+  {w:35,d:"NED",t:"Back-to-back",a:"2:00–2:30 h Z1–Z2",b:"2:30–3:00 h Z1 kolo",z:"Z1/Z2"},
+  {w:36,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:36,d:"TOR",t:"Klanec",a:"6×6′ vzpon @Z4",b:"6×10′ klanec @Z4",z:"Z4"},
+  {w:36,d:"SRE",t:"Moč",a:"25′ vzdrževanje",b:"25′ vzdrževanje",z:"Srednja"},
+  {w:36,d:"ČET",t:"Spec. vzdržl.",a:"90′ Z2 z 30′ specifičnega vzpona",b:"2:30 h Z2 z 40′ specifičnih vzponov",z:"Z2/Z3"},
+  {w:36,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:36,d:"SOB",t:"Dolg trail",a:"4:30–5:00 h, najbolj podoben Lavaredo terenu; brez dirkanja",b:"6:00 h MTB/cestno z veliko D+",z:"Z2"},
+  {w:36,d:"NED",t:"Back-to-back",a:"2:00 h Z1",b:"2:30 h Z1 kolo",z:"Z1"},
+  {w:37,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:37,d:"TOR",t:"Klanec",a:"5×5′ Z4, zadnjič težje",b:"5×8′ Z4, zadnjič težje",z:"Z4"},
+  {w:37,d:"SRE",t:"Moč",a:"20–25′ samo vzdrževanje",b:"20–25′ samo vzdrževanje",z:"Nizka/Srednja"},
+  {w:37,d:"ČET",t:"Spec. vzdržl.",a:"90′ Z2 z 4×10′ Z3",b:"2:30 h Z2 z 4×12′ Z3",z:"Z2/Z3"},
+  {w:37,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:37,d:"SOB",t:"Dolg trail",a:"5:00–5:30 h peak simulacija, 1500–2000 m D+, prehrana/oprema",b:"7:00 h kolo, 1800–2300 m D+",z:"Z2"},
+  {w:37,d:"NED",t:"Back-to-back",a:"2:00 h Z1–Z2",b:"2:30 h Z1 kolo",z:"Z1/Z2"},
+  {w:38,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:38,d:"TOR",t:"Aktivacija",a:"5×3′ vzpon @Z3/Z4",b:"5×5′ klanec @Z3/Z4",z:"Z3/Z4"},
+  {w:38,d:"SRE",t:"Mobilnost",a:"25′ mobilnost + meča",b:"25′ mobilnost + meča",z:"Nizka"},
+  {w:38,d:"ČET",t:"Kratek tek/kolo",a:"60′ Z2",b:"90′ Z2",z:"Z2"},
+  {w:38,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:38,d:"SOB",t:"Dolg trail",a:"3:00 h sproščeno, 800–1000 m D+",b:"4:30 h sproščeno kolo",z:"Z2"},
+  {w:38,d:"NED",t:"Aktivno",a:"60′ Z1",b:"90′ Z1 kolo",z:"Z1"},
+  {w:39,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:39,d:"TOR",t:"Aktivacija",a:"40′ Z1–Z2 + 4×60″ Z3, polno okrevanje",b:"60′ Z1–Z2 + 4×90″ Z3",z:"Z2/Z3"},
+  {w:39,d:"SRE",t:"Mobilnost",a:"20′ mobilnost",b:"20′ mobilnost",z:"Nizka"},
+  {w:39,d:"ČET",t:"Kratek tek/kolo",a:"35–45′ Z1–Z2",b:"60′ Z1–Z2",z:"Z1/Z2"},
+  {w:39,d:"PET",t:"Počitek",a:"Počitek + oprema, hidracija",b:"Počitek + oprema, hidracija",z:"/"},
+  {w:39,d:"SOB",t:"TEKMA",a:"UTMB Lavaredo 80K 🏔️🏁 · 26. 6. 2027 · start 07:00 · GLAVNI CILJ",b:"UTMB Lavaredo 80K 🏔️🏁 · start 07:00 · tekma; kolo ni alternativa",z:"MAX"},
+  {w:39,d:"NED",t:"REGENERACIJA",a:"Počitek / sprehod / hidracija",b:"Počitek ali 30′ Z1 kolo",z:"/"},
+  {w:40,d:"PON",t:"Počitek",a:"Popoln počitek",b:"Popoln počitek",z:"/"},
+  {w:40,d:"TOR",t:"Regeneracija",a:"30–45′ Z1 ali hoja",b:"45–60′ Z1 kolo",z:"Z1"},
+  {w:40,d:"SRE",t:"Mobilnost",a:"20–30′ mobilnost",b:"20–30′ mobilnost",z:"Nizka"},
+  {w:40,d:"ČET",t:"Regeneracija",a:"30–45′ Z1",b:"60′ Z1 kolo",z:"Z1"},
+  {w:40,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:40,d:"SOB",t:"Aktivno",a:"60–90′ pohod/hoja, brez pritiska",b:"90′ zelo lahkotno kolo",z:"Z1"},
+  {w:40,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:41,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:41,d:"TOR",t:"Kratek tek/kolo",a:"60′ Z2 + 4×20″",b:"90′ Z2 + 4×30″",z:"Z2"},
+  {w:41,d:"SRE",t:"Moč",a:"25–30′ vzdrževanje",b:"25–30′ vzdrževanje",z:"Srednja"},
+  {w:41,d:"ČET",t:"Aerobno",a:"75′ Z2",b:"2:00 h Z2",z:"Z2"},
+  {w:41,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:41,d:"SOB",t:"Dolg trail",a:"3:00 h trail, Z2",b:"4:30 h kolo, Z2",z:"Z2"},
+  {w:41,d:"NED",t:"Aktivno",a:"60–75′ Z1",b:"90′ Z1 kolo",z:"Z1"},
+  {w:42,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:42,d:"TOR",t:"Klanec",a:"5×6′ vzpon @Z4",b:"5×9′ klanec @Z4",z:"Z4"},
+  {w:42,d:"SRE",t:"Moč",a:"25′ vzdrževanje + trup",b:"25′ vzdrževanje + trup",z:"Srednja"},
+  {w:42,d:"ČET",t:"Spec. vzdržl.",a:"90′ Z2/Z3, 3×12′ vzpona",b:"2:30 h Z2/Z3, 3×15′ klanca",z:"Z2/Z3"},
+  {w:42,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:42,d:"SOB",t:"Dolg trail",a:"4:00 h trail, Z2, zadnja 45′ v temi",b:"5:30 h kolo z veliko D+",z:"Z2"},
+  {w:42,d:"NED",t:"Nočni spec.",a:"2:00 h trail, start ~21:00, Z1–Z2",b:"2:30 h kolo, zadnja ura v temi",z:"Z1/Z2"},
+  {w:43,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:43,d:"TOR",t:"Klanec",a:"6×5′ vzpon @Z4",b:"6×8′ klanec @Z4",z:"Z4"},
+  {w:43,d:"SRE",t:"Moč",a:"20–25′ vzdrževanje",b:"20–25′ vzdrževanje",z:"Nizka/Srednja"},
+  {w:43,d:"ČET",t:"Spec. vzdržl.",a:"90′ Z2 + 30′ Z3",b:"2:30 h Z2 + 40′ Z3",z:"Z2/Z3"},
+  {w:43,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:43,d:"SOB",t:"Dolg trail",a:"4:30–5:00 h, 1200–1600 m D+, prehrana tekme",b:"6:00 h kolo z 1500–1900 m D+",z:"Z2"},
+  {w:43,d:"NED",t:"Nočni spec.",a:"3:00 h trail, start ~20:30–21:30, zadnja ura Z1",b:"3:30 h kolo v mraku/noči",z:"Z1/Z2"},
+  {w:44,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:44,d:"TOR",t:"Aktivacija",a:"5×3′ vzpon @Z3/Z4",b:"5×5′ klanec @Z3/Z4",z:"Z3/Z4"},
+  {w:44,d:"SRE",t:"Mobilnost",a:"25′ mobilnost",b:"25′ mobilnost",z:"Nizka"},
+  {w:44,d:"ČET",t:"Kratek tek/kolo",a:"60′ Z2",b:"90′ Z2",z:"Z2"},
+  {w:44,d:"PET",t:"Počitek",a:"Počitek + priprava čelne svetilke/opreme",b:"Počitek + priprava opreme",z:"/"},
+  {w:44,d:"SOB",t:"Dolg trail",a:"2:30–3:00 h sproščeno, del v temi",b:"4:00 h kolo sproščeno",z:"Z2"},
+  {w:44,d:"NED",t:"Počitek",a:"Počitek",b:"Počitek / 45′ Z1 kolo",z:"/"},
+  {w:45,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:45,d:"TOR",t:"Aktivacija",a:"35′ Z1–Z2 + 4×60″ Z3",b:"50′ Z1–Z2 + 4×90″ Z3",z:"Z2/Z3"},
+  {w:45,d:"SRE",t:"Mobilnost",a:"20′ mobilnost",b:"20′ mobilnost",z:"Nizka"},
+  {w:45,d:"ČET",t:"Kratek tek/kolo",a:"30–40′ Z1",b:"45–60′ Z1",z:"Z1"},
+  {w:45,d:"PET",t:"Počitek",a:"Počitek + priprava nočne opreme",b:"Počitek + priprava nočne opreme",z:"/"},
+  {w:45,d:"PET",t:"TEKMA",a:"K24 100 km 🌙🏁 · 6. 8. 2027 ob 22:00",b:"K24 100 km 🌙🏁 · tekma; kolo ni alternativa",z:"MAX"},
+  {w:45,d:"NED",t:"REGENERACIJA",a:"Počitek / praznovanje 🎉",b:"Počitek / zelo lahkotno kolo",z:"/"}
 ];
+
+const WEEK_INFO = {
+  1:{load:"6–8 h",focus:"GO4: uvodni kakovostni dražljaj + dolg trail"},
+  2:{load:"7–9 h",focus:"GO4: zadnji kakovostni dražljaji + dolg trail"},
+  3:{load:"8–10 h",focus:"GO4: podaljšaj vzpone in čas na nogah"},
+  4:{load:"9–11 h",focus:"GO4: zadnji velik vikend"},
+  5:{load:"6–7 h",focus:"GO4: taper, ohrani intenzivnost"},
+  6:{load:"3–5 h",focus:"🏁 GO4Trail 64 km · start 07:30 · tekma B"},
+  7:{load:"3–5 h",focus:"Reset po GO4 · brez kakovostnih treningov"},
+  8:{load:"5–7 h",focus:"Vrnitev v ritem · lahkotno + moč"},
+  9:{load:"7–9 h",focus:"Baza + moč · začetek novega cikla"},
+  10:{load:"7–10 h",focus:"Aerobna baza + prag"},
+  11:{load:"8–10 h",focus:"Baza · klanec + daljši aerobni dan"},
+  12:{load:"9–11 h",focus:"Baza · prvi resnejši dolg vikend"},
+  13:{load:"6–8 h",focus:"Razbremenitev + moč"},
+  14:{load:"8–10 h",focus:"Baza · progresija"},
+  15:{load:"9–11 h",focus:"Baza · vzponi + dolg trail"},
+  16:{load:"10–12 h",focus:"Baza · back-to-back"},
+  17:{load:"7–9 h",focus:"Razbremenitev + regeneracija"},
+  18:{load:"10–12 h",focus:"Prehod v ultra build"},
+  19:{load:"8–10 h",focus:"Ultra build · dolg trail"},
+  20:{load:"9–11 h",focus:"Ultra build · vertikalni fokus"},
+  21:{load:"10–12 h",focus:"Ultra build · back-to-back"},
+  22:{load:"7–9 h",focus:"Razbremenitev"},
+  23:{load:"10–12 h",focus:"Ultra build · 4–5 h specifično"},
+  24:{load:"11–13 h",focus:"Ultra build · dolg vikend"},
+  25:{load:"7–9 h",focus:"Razbremenitev"},
+  26:{load:"10–13 h",focus:"Ultra build · zadnji velik blok"},
+  27:{load:"11–13 h",focus:"Peak ultra · čas na nogah"},
+  28:{load:"8–10 h",focus:"Priprava na UTVV / simulacija"},
+  29:{load:"6–8 h",focus:"UTVV taper"},
+  30:{load:"3–8 h",focus:"🏁 UTVV 163 km · start 19:00 · OPCIJSKO / kontrolirano"},
+  31:{load:"3–6 h",focus:"Regeneracija po UTVV / ali simulaciji"},
+  32:{load:"8–10 h",focus:"Lavaredo specifično · vrnitev"},
+  33:{load:"9–11 h",focus:"Lavaredo · klanec + spusti"},
+  34:{load:"10–12 h",focus:"Lavaredo · 4–5 h trail"},
+  35:{load:"9–11 h",focus:"Lavaredo · back-to-back"},
+  36:{load:"10–13 h",focus:"Lavaredo · zadnji velik vikend"},
+  37:{load:"11–14 h",focus:"🔥 Peak week · zadnji zelo velik blok"},
+  38:{load:"7–9 h",focus:"Taper 1 · volumen ↓"},
+  39:{load:"4–6 h",focus:"🏔️ UTMB Lavaredo 80K · start 07:00 · GLAVNI CILJ"},
+  40:{load:"2–5 h",focus:"Recovery po Lavaredu"},
+  41:{load:"6–8 h",focus:"Vrnitev v ritem · K24 baza"},
+  42:{load:"8–10 h",focus:"K24 · dolžina + nočni trening"},
+  43:{load:"9–11 h",focus:"K24 · specifično + noč"},
+  44:{load:"5–7 h",focus:"K24 taper"},
+  45:{load:"2–5 h",focus:"🌙 K24 100 km · start 22:00"}
+};
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let currentView = 'overview';
 let currentWeek = 1;
-const bikeMode = {};   
-const expanded = {};   
-const notes = {};  
+const bikeMode = {};   // key: "w-di" => bool
+const expanded = {};   // key: "w-di" => bool
+const notes = {};  // key: "w-di" => note text
 
+// Load saved links from localStorage
 try {
-  const saved = localStorage.getItem('jat_notes');
+  const saved = localStorage.getItem('roki_notes');
   if (saved) Object.assign(notes, JSON.parse(saved));
 } catch(e) {}
 
 function saveLinks() {
-  try { localStorage.setItem('jat_notes', JSON.stringify(notes)); } catch(e) {}
+  try { localStorage.setItem('roki_notes', JSON.stringify(notes)); } catch(e) {}
 }
 
 function setNote(key, text) {
@@ -524,12 +833,12 @@ function saveInputNote(key) {
 function canSwap(d) { return d.a !== d.b && !["Počitek","Mobilnost","TEKMA","REGENERACIJA"].includes(d.t); }
 
 function getWeeks() {
-  return Array.from({length:22},(_,i)=>{
+  return Array.from({length:45},(_,i)=>{
     const wn=i+1;
-    const start=new Date("2026-04-20T12:00:00");
+    const start=new Date("2026-09-28");
     start.setDate(start.getDate()+i*7);
     const phase=PHASES.find(p=>p.weeks.includes(wn));
-    return {week:wn, days:RAW.filter(r=>r.w===wn), phase, startDate:start, isRegen:REGEN_WEEKS.includes(wn)};
+    return {week:wn, days:RAW.filter(r=>r.w===wn), phase, startDate:start, isRegen:REGEN_WEEKS.includes(wn), info:WEEK_INFO[wn]};
   });
 }
 const WEEKS = getWeeks();
@@ -561,56 +870,21 @@ function renderOverview() {
       </div>
       <div class="week-grid">
         ${phaseWeeks.map(w => {
-          let weekSecs = 0;
-          let weekDist = 0;
-          let weekElev = 0;
-
           const dots = w.days.map((d,di) => {
-            const dayDate = new Date(w.startDate);
-            dayDate.setDate(dayDate.getDate() + di);
-            const dateStr = toLocalISODate(dayDate);
-            
-            const dayActs = icuActivities[dateStr] || [];
-            const hasIcu = dayActs.length > 0;
-
-            dayActs.forEach(a => {
-              weekSecs += (a.moving_time || a.elapsed_time || 0);
-              weekDist += (a.distance || 0);
-              weekElev += (a.total_elevation_gain || 0);
-            });
-
             const ib = bikeMode[`${w.week}-${di}`] && canSwap(d);
             const col = ib ? '#1971c2' : (TYPE_COLORS[d.t]||'#868e96');
-            const actNote = notes[`${w.week}-${di}`];
-            
-            const isDone = !!actNote || hasIcu;
-
-            // Uporabimo ✓ znak znotraj pike, če ima intervals podatek, sicer prazno
-            return `<div class="week-dot${isDone?' done-dot':''}${hasIcu?' icu-active':''}" style="background:${isDone?'#2f9e44':col}${isDone?'':'99'}">${hasIcu ? '✓' : ''}</div>`;
+            const isDone = !!notes[`${w.week}-${di}`] && d.t !== 'Počitek';
+            return `<div class="week-dot${isDone?' done-dot':''}" style="background:${isDone?'#2f9e44':col}${isDone?'':'99'}"></div>`;
           }).join('');
-
-          let summaryHtml = '';
-          if (weekSecs > 0 || weekDist > 0 || weekElev > 0) {
-            const sumTime = formatDuration(weekSecs);
-            const sumDist = formatDistance(weekDist) || '0 km';
-            const sumElev = formatElevation(weekElev) || '0 m D+';
-            summaryHtml = `<div class="week-summary">
-              <span style="color:#1864ab; font-weight:600">⏱ ${sumTime}</span>
-              <div style="display:flex; justify-content:space-between; margin-top:3px;">
-                <span>📏 ${sumDist}</span>
-                <span style="color:#2f9e44">⛰ ${sumElev}</span>
-              </div>
-            </div>`;
-          }
-
           const sel = currentWeek===w.week ? 'selected' : '';
           const selBorder = currentWeek===w.week ? `border-color:${phase.color}77` : '';
           return `<div class="week-card ${sel}" style="${selBorder}" onclick="selectWeek(${w.week})">
             ${w.isRegen?'<div class="week-card-regen">regen</div>':''}
             <div class="week-card-label">T${w.week} · ${fmtDate(w.startDate)}</div>
-            <div class="week-card-num" style="color:${phase.color}">${w.week===22?'🏁':'T'+w.week}</div>
+            <div class="week-card-num" style="color:${phase.color}">${[5,29,38,44].includes(w.week)?'🏁':'T'+w.week}</div>
             <div class="week-dots">${dots}</div>
-            ${summaryHtml}
+             <div class="week-card-load">${w.info?.load||''}</div>
+             <div class="week-card-focus">${w.info?.focus||''}</div>
           </div>`;
         }).join('')}
       </div>
@@ -620,6 +894,7 @@ function renderOverview() {
 
 function selectWeek(wn) {
   currentWeek = wn;
+  // switch to week view
   document.querySelectorAll('.tab-btn').forEach((b,i)=>{if(i===1)b.classList.add('active');else b.classList.remove('active');});
   document.getElementById('view-overview').classList.add('hidden');
   document.getElementById('view-week').classList.remove('hidden');
@@ -629,21 +904,8 @@ function selectWeek(wn) {
 function renderWeek() {
   const w = WEEKS[currentWeek-1];
   const el = document.getElementById('view-week');
-  const todayDateStr = toLocalISODate(new Date()); 
-
   const days = w.days.map((d,di) => {
     const key = `${currentWeek}-${di}`;
-    
-    const dayDate = new Date(w.startDate);
-    dayDate.setDate(dayDate.getDate() + di);
-    const dateStr = toLocalISODate(dayDate);
-    const dateDisplay = dayDate.toLocaleDateString("sl-SI", { day: "numeric", month: "numeric" });
-    
-    const isToday = dateStr === todayDateStr;
-
-    const dayActs = icuActivities[dateStr] || [];
-    const hasIcu = dayActs.length > 0;
-
     const sw = canSwap(d);
     const ib = bikeMode[key] && sw;
     const col = TYPE_COLORS[d.t]||'#4b5563';
@@ -656,33 +918,27 @@ function renderWeek() {
     const icon = TYPE_ICONS[d.t]||'•';
 
     const detailHTML = hasDet && isExp ? renderDetail(det, col) : '';
+
     const actNote = notes[key] || '';
-    
-    const isDone = !!actNote || hasIcu; 
+    const isDone = !!actNote && !isRest;
     const isNoteOpen = expanded['note-' + key];
 
-    return `<div class="day-card${isRest?' rest':''}${isDone?' done':''}${isToday?' is-today':''}" style="${isToday ? '' : `background:${isRest?'var(--bg3)':'var(--bg2)'};border:1px solid ${isDone?'#2f9e44':isRest?'#e9ecef':col+'33'}`}">
+    return `<div class="day-card${isRest?' rest':''}${isDone?' done':''}" style="background:${isRest?'var(--bg3)':'var(--bg2)'};border:1px solid ${isDone?'#2f9e44':isRest?'#e9ecef':col+'33'}">
       <div class="day-header">
         <div class="day-icon-col">
           <div class="day-day">${d.d}</div>
-          ${isToday 
-            ? `<div class="today-badge">Danes</div>` 
-            : `<div style="font-size: 9px; color: var(--text4); margin-bottom: 2px;">${dateDisplay}</div>`
-          }
           <div class="day-emoji">${isDone?'✅':icon}</div>
         </div>
         <div class="day-info">
           <div class="day-type" style="color:${isDone?'#2f9e44':ib?'#1971c2':col}">${d.t}${ib?'<span> (kolo)</span>':''}${isDone?' <span style="font-size:10px;color:#2f9e44;font-style:normal;margin-left:4px">OPRAVLJENO</span>':''}</div>
           <div class="day-content">${content}</div>
-          ${actNote?`<div class="day-note-preview">${actNote.length>80?actNote.substring(0,80)+'…':actNote}</div>`:''}
+          ${isDone&&actNote?`<div class="day-note-preview">${actNote.length>80?actNote.substring(0,80)+'…':actNote}</div>`:''}
         </div>
         <div class="day-actions">
           ${isDone?`<span class="done-badge">✓ Opravljeno</span>`:''}
           ${d.z!=='/'?`<span class="zone-badge" style="background:${zc}18;color:${zc};border:1px solid ${zc}33">${d.z}</span>`:''}
           ${sw?`<button class="swap-btn ${ib?'is-bike':'is-run'}" onclick="toggleBike('${key}')">🔄 ${ib?'→ Tek':'→ Kolo'}</button>`:''}
-          
-          <button class="detail-btn${isNoteOpen?' open':''}" onclick="toggleNoteInput('${key}')">📝 ${actNote?'Opomba ✎':'+ Opomba'}</button>
-          
+          ${!isRest?`<button class="detail-btn${isNoteOpen?' open':''}" onclick="toggleNoteInput('${key}')">📝 ${isDone?'Opomba ✎':'+ Opomba'}</button>`:''}
           ${hasDet?`<button class="detail-btn${isExp?' open':''}" onclick="toggleExpand('${key}')">
             ${isExp?'▲ Skrij':'▼ Podrobnosti'}
           </button>`:''}
@@ -693,13 +949,12 @@ function renderWeek() {
           <textarea id="inp-${key}" class="activity-input" placeholder="Zapiši opombo — kako si se počutil, čas, km, D+, vreme..." rows="3" style="resize:vertical">${actNote}</textarea>
           <div style="display:flex;gap:6px;margin-top:4px">
             <button class="activity-save-btn" onclick="saveInputNote('${key}')">Shrani</button>
-            ${actNote?`<button class="activity-clear-btn" onclick="clearNote('${key}')">Izbriši opombo</button>`:''}
+            ${isDone?`<button class="activity-clear-btn" onclick="clearNote('${key}')">Izbriši opombo</button>`:''}
           </div>
         </div>
       </div>`:''}
       ${hasDet&&isExp?`<div class="detail-panel">${renderDetail(det,col)}</div>`:''}
-      
-      ${icuWorkerUrl?renderIcuActivity(dayActs):''}
+      ${!isRest&&icuWorkerUrl?renderIcuActivity(getIcuActivitiesForWeekDay(currentWeek, di)):''}
     </div>`;
   }).join('');
 
@@ -710,8 +965,9 @@ function renderWeek() {
         <span class="week-nav-title" style="color:${w.phase.color}">Teden ${currentWeek}</span>
         <span class="week-nav-sub">${fmtDate(w.startDate)} · ${w.phase.name}</span>
         ${w.isRegen?'<span class="week-nav-regen">regeneracijski</span>':''}
+        ${w.info?.load?`<span class="week-nav-regen">cilj ${w.info.load}</span>`:''}
       </div>
-      <button class="nav-btn" onclick="changeWeek(1)" ${currentWeek===22?'disabled':''}>→</button>
+      <button class="nav-btn" onclick="changeWeek(1)" ${currentWeek===44?'disabled':''}>→</button>
     </div>
     <div class="phase-note" style="background:${w.phase.color}0f;border:1px solid ${w.phase.color}28;color:${w.phase.color}">
       ${w.phase.desc}
@@ -720,7 +976,7 @@ function renderWeek() {
     <div class="bottom-nav">
       <button class="bottom-btn" onclick="changeWeek(-1)" ${currentWeek===1?'disabled':''}>← Prejšnji</button>
       <button class="bottom-btn center" onclick="showViewOverview()">Pregled</button>
-      <button class="bottom-btn" onclick="changeWeek(1)" ${currentWeek===22?'disabled':''}>Naslednji →</button>
+      <button class="bottom-btn" onclick="changeWeek(1)" ${currentWeek===44?'disabled':''}>Naslednji →</button>
     </div>`;
 }
 
@@ -788,7 +1044,7 @@ function toggleNoteInput(key) {
 }
 
 function changeWeek(delta) {
-  currentWeek = Math.max(1, Math.min(22, currentWeek + delta));
+  currentWeek = Math.max(1, Math.min(44, currentWeek + delta));
   renderWeek();
 }
 
@@ -803,10 +1059,11 @@ function showViewOverview() {
 
 // ─── INTERVALS.ICU INTEGRATION ───────────────────────────────────────────────
 let icuWorkerUrl = '';
-let icuActivities = {};
+let icuActivities = {};  // key: "YYYY-MM-DD" => activity object
 
+// Load saved worker URL
 try {
-  const saved = localStorage.getItem('jat_icu_worker');
+  const saved = localStorage.getItem('roki_icu_worker') || localStorage.getItem('jat_icu_worker');
   if (saved) {
     icuWorkerUrl = saved;
     document.getElementById('icu-worker-url').value = saved;
@@ -827,9 +1084,9 @@ function icuConnect() {
     return;
   }
   icuWorkerUrl = url;
-  try { localStorage.setItem('jat_icu_worker', url); } catch(e) {}
+  try { localStorage.setItem('roki_icu_worker', url); } catch(e) {}
   document.getElementById('icu-status-txt').textContent = 'Testiram povezavo...';
-  
+  // Test connection
   fetch(url + '/athlete')
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(data => {
@@ -845,42 +1102,11 @@ function icuConnect() {
 function icuDisconnect() {
   icuWorkerUrl = '';
   icuActivities = {};
-  document.getElementById('fitness-fatigue').style.display = 'none';
-  try { localStorage.removeItem('jat_icu_worker'); localStorage.removeItem('jat_icu_cache'); } catch(e) {}
+  try { localStorage.removeItem('roki_icu_worker'); localStorage.removeItem('roki_icu_cache'); } catch(e) {}
   document.getElementById('icu-config').style.display = 'flex';
   document.getElementById('icu-connected').style.display = 'none';
+  document.getElementById('icu-worker-url').value = '';
   renderWeek();
-  renderOverview();
-}
-
-function updateFitnessFromActivities() {
-  let latestCtl = null;
-  let latestAtl = null;
-  let maxDate = "1970-01-01";
-  const todayStr = toLocalISODate(new Date());
-
-  // Najdi zadnjo aktivnost (do današnjega dne), ki vsebuje ctl/atl
-  for (const date in icuActivities) {
-    if (date > maxDate && date <= todayStr) {
-      const acts = icuActivities[date];
-      if (acts.length > 0) {
-        const act = acts[acts.length - 1];
-        if (act.icu_ctl !== undefined) {
-          latestCtl = Math.round(act.icu_ctl);
-          latestAtl = Math.round(act.icu_atl);
-          maxDate = date;
-        }
-      }
-    }
-  }
-
-  if (latestCtl !== null) {
-    document.getElementById('val-ctl').textContent = latestCtl;
-    document.getElementById('val-atl').textContent = latestAtl;
-    document.getElementById('fitness-fatigue').style.display = 'inline-flex';
-  } else {
-    document.getElementById('fitness-fatigue').style.display = 'none';
-  }
 }
 
 function icuSync() {
@@ -888,33 +1114,34 @@ function icuSync() {
   const statusEl = document.getElementById('icu-sync-status');
   statusEl.textContent = 'Nalagam aktivnosti...';
 
-  const url = icuWorkerUrl + '/activities?oldest=2026-04-20&newest=2026-09-19&limit=200';
+  // Fetch activities for the full 2026/27 training season
+  const url = icuWorkerUrl + '/activities?oldest=2026-10-05&newest=2027-08-08&limit=500';
   fetch(url)
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(data => {
       icuActivities = {};
       const acts = Array.isArray(data) ? data : (data.activities || []);
       acts.forEach(act => {
+        // Key by date (YYYY-MM-DD)
         const date = (act.start_date_local || act.date || '').substring(0, 10);
         if (date) {
           if (!icuActivities[date]) icuActivities[date] = [];
           icuActivities[date].push(act);
         }
       });
-      try { localStorage.setItem('jat_icu_cache', JSON.stringify(icuActivities)); } catch(e) {}
+      // Cache
+      try { localStorage.setItem('roki_icu_cache', JSON.stringify(icuActivities)); } catch(e) {}
       statusEl.textContent = '✓ ' + acts.length + ' aktivnosti naloženih · ' + new Date().toLocaleTimeString('sl-SI', {hour:'2-digit',minute:'2-digit'});
-      
-      updateFitnessFromActivities();
       renderWeek();
       if (!document.getElementById('view-overview').classList.contains('hidden')) renderOverview();
     })
     .catch(err => {
+      // Try cache
       try {
-        const cached = localStorage.getItem('jat_icu_cache');
+        const cached = localStorage.getItem('roki_icu_cache') || localStorage.getItem('jat_icu_cache');
         if (cached) {
           icuActivities = JSON.parse(cached);
           statusEl.textContent = '⚠ Iz predpomnilnika (napaka: ' + err + ')';
-          updateFitnessFromActivities();
         } else {
           statusEl.textContent = '✗ Napaka pri nalaganju: ' + err;
         }
@@ -924,12 +1151,22 @@ function icuSync() {
     });
 }
 
+function getIcuActivitiesForWeekDay(week, dayIndex) {
+  // Calculate date for this week+day
+  const start = new Date('2026-09-28');
+  const dayOffset = (week - 1) * 7 + dayIndex;
+  const d = new Date(start);
+  d.setDate(d.getDate() + dayOffset);
+  const dateStr = d.toISOString().substring(0, 10);
+  return icuActivities[dateStr] || [];
+}
+
 function formatDuration(seconds) {
   if (!seconds) return '—';
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
-  if (h > 0) return h + 'h ' + m + 'm';
-  return m + 'm';
+  if (h > 0) return h + 'h ' + m + 'min';
+  return m + 'min';
 }
 
 function formatDistance(meters) {
@@ -945,49 +1182,47 @@ function formatElevation(meters) {
 
 function renderIcuActivity(acts) {
   if (!acts || acts.length === 0) return '';
-  return acts.map(act => {
-    const name = act.name || act.type || 'Aktivnost';
-    const duration = formatDuration(act.moving_time || act.elapsed_time);
-    const distance = formatDistance(act.distance);
-    const elevation = formatElevation(act.total_elevation_gain);
-    const actUrl = 'https://intervals.icu/activities/' + act.id;
+  const act = acts[0]; // primary activity of the day
+  const name = act.name || act.type || 'Aktivnost';
+  const duration = formatDuration(act.moving_time || act.elapsed_time);
+  const distance = formatDistance(act.distance);
+  const elevation = formatElevation(act.total_elevation_gain);
+  const actUrl = 'https://intervals.icu/activities/' + act.id;
 
-    const stats = [
-      { val: duration, lbl: 'Čas' },
-      distance ? { val: distance, lbl: 'Razdalja' } : null,
-      elevation ? { val: elevation, lbl: 'Višina' } : null,
-    ].filter(Boolean);
+  const stats = [
+    { val: duration, lbl: 'Čas' },
+    distance ? { val: distance, lbl: 'Razdalja' } : null,
+    elevation ? { val: elevation, lbl: 'Višina' } : null,
+  ].filter(Boolean);
 
-    return `<div class="icu-activity">
-      <div class="icu-activity-name">🏅 ${name}</div>
-      <div class="icu-activity-row">
-        ${stats.map(s => `<div class="icu-activity-stat">
-          <span class="icu-activity-val">${s.val}</span>
-          <span class="icu-activity-lbl">${s.lbl}</span>
-        </div>`).join('')}
-        <a class="icu-activity-link" href="${actUrl}" target="_blank" rel="noopener">Odpri v Intervals.icu →</a>
-      </div>
-    </div>`;
-  }).join('');
+  return `<div class="icu-activity">
+    <div class="icu-activity-name">🏅 ${name}</div>
+    <div class="icu-activity-row">
+      ${stats.map(s => `<div class="icu-activity-stat">
+        <span class="icu-activity-val">${s.val}</span>
+        <span class="icu-activity-lbl">${s.lbl}</span>
+      </div>`).join('')}
+      <a class="icu-activity-link" href="${actUrl}" target="_blank" rel="noopener">Odpri v Intervals.icu →</a>
+    </div>
+  </div>`;
 }
 
+// Load cached activities on startup
 try {
-  const cached = localStorage.getItem('jat_icu_cache');
-  if (cached) {
-    icuActivities = JSON.parse(cached);
-    updateFitnessFromActivities();
-  }
+  const cached = localStorage.getItem('roki_icu_cache') || localStorage.getItem('jat_icu_cache');
+  if (cached) icuActivities = JSON.parse(cached);
 } catch(e) {}
 
 // Auto-open on current week
 (function() {
   const today = new Date();
-  const start = new Date('2026-04-20T00:00:00');
-  const end = new Date('2026-09-19T23:59:59');
+  const start = new Date('2026-09-28');
+  const end = new Date('2027-08-08');
   if (today >= start && today <= end) {
     const diffDays = Math.floor((today - start) / 86400000);
-    const weekNum = Math.min(22, Math.floor(diffDays / 7) + 1);
+    const weekNum = Math.min(45, Math.floor(diffDays / 7) + 1);
     currentWeek = weekNum;
+    // Switch to week view
     document.querySelectorAll('.tab-btn').forEach((b,i)=>{if(i===1)b.classList.add('active');else b.classList.remove('active');});
     document.getElementById('view-overview').classList.add('hidden');
     document.getElementById('view-week').classList.remove('hidden');
