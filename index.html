@@ -41,6 +41,10 @@
   .header-sub { font-size: clamp(13px,3vw,17px); color: var(--green); margin-top: 3px; font-style: italic; }
   .header-dates { font-size: 12px; color: var(--text3); margin-top: 6px; }
   .header-dates span { color: var(--purple); }
+  /* STATS ROW (Fitness & Fatigue) */
+  .header-stats-row { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; align-items:center; }
+  .wellness-badge { font-family:system-ui,-apple-system,sans-serif; font-size:12px; background:#fce4ec; color:#9c27b0; padding:5px 12px; border-radius:8px; border:1px solid #f8bbd0; display:inline-flex; align-items:center; gap:6px; }
+  .wellness-badge span { font-weight:600; }
   .phase-pills { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
   .phase-pill { display: flex; align-items: center; gap: 8px; }
   .phase-pill-weeks { font-size: 11px; color: var(--text3); }
@@ -191,6 +195,13 @@
         <h1>Rokovi dnevniki</h1>
         <div class="header-sub">Od baze do dolgih gora · tek ali kolo</div>
         <div class="header-dates">28. september 2026 → <span>8. avgust 2027</span></div>
+        <div class="header-stats-row">
+          <div class="wellness-badge" id="fitness-fatigue" style="display:none;">
+            💪 Fitnes (CTL): <span id="val-ctl">--</span>
+            <span style="color:#f8bbd0; margin:0 4px">|</span>
+            📉 Utrujenost (ATL): <span id="val-atl">--</span>
+          </div>
+        </div>
       </div>
       <div class="phase-pills">
           <div class="phase-pill"><span class="phase-pill-weeks">T1–T8</span><span class="phase-pill-badge" style="background:#fff5f5;color:#c92a2a;border:1px solid #c92a2a55">GO4 & reset</span></div>
@@ -221,7 +232,7 @@
     <span style="font-size:13px;font-weight:600;color:#0369a1">⚡ Intervals.icu</span>
     <div id="icu-config" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span class="icu-label">Worker URL:</span>
-      <input class="icu-input" id="icu-worker-url" placeholder="https://roki-proxy.rokime.workers.dev" style="width:300px">
+      <input class="icu-input" id="icu-worker-url" placeholder="https://jat-proxy.rok-marolt-app.workers.dev" style="width:300px">
       <button class="icu-btn" onclick="icuConnect()">Poveži</button>
       <span class="icu-label" id="icu-status-txt"></span>
     </div>
@@ -248,6 +259,12 @@
 </div>
 
 <script>
+// ─── POMOŽNE FUNKCIJE ZA DATUME ───────────────────────────────────────────────
+function toLocalISODate(date) {
+  const d = new Date(date);
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
 // ─── DATA ────────────────────────────────────────────────────────────────────
 const PHASES = [
   {name:"GO4 priprava", weeks:[1,2,3,4,5,6], color:"#c92a2a", desc:"Zaključek priprave na GO4Trail 64 km · nato premišljen reset."},
@@ -873,8 +890,12 @@ function renderOverview() {
           const dots = w.days.map((d,di) => {
             const ib = bikeMode[`${w.week}-${di}`] && canSwap(d);
             const col = ib ? '#1971c2' : (TYPE_COLORS[d.t]||'#868e96');
-            const isDone = !!notes[`${w.week}-${di}`] && d.t !== 'Počitek';
-            return `<div class="week-dot${isDone?' done-dot':''}" style="background:${isDone?'#2f9e44':col}${isDone?'':'99'}"></div>`;
+            const dayDate = new Date(w.startDate);
+            dayDate.setDate(dayDate.getDate() + di);
+            const dateStr = toLocalISODate(dayDate);
+            const hasIcu = (icuActivities[dateStr] || []).length > 0;
+            const isDone = (!!notes[`${w.week}-${di}`] && d.t !== 'Počitek') || hasIcu;
+            return `<div class="week-dot${isDone?' done-dot':''}${hasIcu?' icu-active':''}" style="background:${isDone?'#2f9e44':col}${isDone?'':'99'}">${hasIcu?'✓':''}</div>`;
           }).join('');
           const sel = currentWeek===w.week ? 'selected' : '';
           const selBorder = currentWeek===w.week ? `border-color:${phase.color}77` : '';
@@ -910,6 +931,11 @@ function renderWeek() {
     const ib = bikeMode[key] && sw;
     const col = TYPE_COLORS[d.t]||'#4b5563';
     const isRest = d.t==='Počitek'||(d.a==='Počitek'&&d.b==='Počitek');
+    const dayDate = new Date(w.startDate);
+    dayDate.setDate(dayDate.getDate() + di);
+    const dateStr = toLocalISODate(dayDate);
+    const dayIcuActs = icuActivities[dateStr] || [];
+    const hasIcu = dayIcuActs.length > 0;
     const det = getDetail(currentWeek, d, ib);
     const hasDet = !!det;
     const isExp = expanded[key];
@@ -920,10 +946,11 @@ function renderWeek() {
     const detailHTML = hasDet && isExp ? renderDetail(det, col) : '';
 
     const actNote = notes[key] || '';
-    const isDone = !!actNote && !isRest;
+    const isDone = !!actNote || hasIcu;
+    const cardIsRest = isRest && !hasIcu;
     const isNoteOpen = expanded['note-' + key];
 
-    return `<div class="day-card${isRest?' rest':''}${isDone?' done':''}" style="background:${isRest?'var(--bg3)':'var(--bg2)'};border:1px solid ${isDone?'#2f9e44':isRest?'#e9ecef':col+'33'}">
+    return `<div class="day-card${cardIsRest?' rest':''}${isDone?' done':''}" style="background:${cardIsRest?'var(--bg3)':'var(--bg2)'};border:1px solid ${isDone?'#2f9e44':cardIsRest?'#e9ecef':col+'33'}">
       <div class="day-header">
         <div class="day-icon-col">
           <div class="day-day">${d.d}</div>
@@ -954,7 +981,7 @@ function renderWeek() {
         </div>
       </div>`:''}
       ${hasDet&&isExp?`<div class="detail-panel">${renderDetail(det,col)}</div>`:''}
-      ${!isRest&&icuWorkerUrl?renderIcuActivity(getIcuActivitiesForWeekDay(currentWeek, di)):''}
+      ${icuWorkerUrl?renderIcuActivity(dayIcuActs):''}
     </div>`;
   }).join('');
 
@@ -967,7 +994,7 @@ function renderWeek() {
         ${w.isRegen?'<span class="week-nav-regen">regeneracijski</span>':''}
         ${w.info?.load?`<span class="week-nav-regen">cilj ${w.info.load}</span>`:''}
       </div>
-      <button class="nav-btn" onclick="changeWeek(1)" ${currentWeek===44?'disabled':''}>→</button>
+      <button class="nav-btn" onclick="changeWeek(1)" ${currentWeek===45?'disabled':''}>→</button>
     </div>
     <div class="phase-note" style="background:${w.phase.color}0f;border:1px solid ${w.phase.color}28;color:${w.phase.color}">
       ${w.phase.desc}
@@ -976,7 +1003,7 @@ function renderWeek() {
     <div class="bottom-nav">
       <button class="bottom-btn" onclick="changeWeek(-1)" ${currentWeek===1?'disabled':''}>← Prejšnji</button>
       <button class="bottom-btn center" onclick="showViewOverview()">Pregled</button>
-      <button class="bottom-btn" onclick="changeWeek(1)" ${currentWeek===44?'disabled':''}>Naslednji →</button>
+      <button class="bottom-btn" onclick="changeWeek(1)" ${currentWeek===45?'disabled':''}>Naslednji →</button>
     </div>`;
 }
 
@@ -1044,7 +1071,7 @@ function toggleNoteInput(key) {
 }
 
 function changeWeek(delta) {
-  currentWeek = Math.max(1, Math.min(44, currentWeek + delta));
+  currentWeek = Math.max(1, Math.min(45, currentWeek + delta));
   renderWeek();
 }
 
@@ -1059,9 +1086,9 @@ function showViewOverview() {
 
 // ─── INTERVALS.ICU INTEGRATION ───────────────────────────────────────────────
 let icuWorkerUrl = '';
-let icuActivities = {};  // key: "YYYY-MM-DD" => activity object
+let icuActivities = {};  // key: "YYYY-MM-DD" => activity[]
+let icuWellness = {};    // key: "YYYY-MM-DD" => wellness object
 
-// Load saved worker URL
 try {
   const saved = localStorage.getItem('roki_icu_worker') || localStorage.getItem('jat_icu_worker');
   if (saved) {
@@ -1086,7 +1113,7 @@ function icuConnect() {
   icuWorkerUrl = url;
   try { localStorage.setItem('roki_icu_worker', url); } catch(e) {}
   document.getElementById('icu-status-txt').textContent = 'Testiram povezavo...';
-  // Test connection
+
   fetch(url + '/athlete')
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(data => {
@@ -1102,62 +1129,131 @@ function icuConnect() {
 function icuDisconnect() {
   icuWorkerUrl = '';
   icuActivities = {};
-  try { localStorage.removeItem('roki_icu_worker'); localStorage.removeItem('roki_icu_cache'); } catch(e) {}
+  icuWellness = {};
+  const ff = document.getElementById('fitness-fatigue');
+  if (ff) ff.style.display = 'none';
+  try {
+    localStorage.removeItem('roki_icu_worker');
+    localStorage.removeItem('jat_icu_worker');
+    localStorage.removeItem('roki_icu_cache');
+    localStorage.removeItem('jat_icu_cache');
+  } catch(e) {}
   document.getElementById('icu-config').style.display = 'flex';
   document.getElementById('icu-connected').style.display = 'none';
   document.getElementById('icu-worker-url').value = '';
   renderWeek();
+  renderOverview();
 }
 
-function icuSync() {
+function updateFitnessFromActivities() {
+  let latestCtl = null;
+  let latestAtl = null;
+  let latestTs = '';
+  const todayStr = toLocalISODate(new Date());
+
+  // First choice: Intervals.icu activity fields (these were used by the previous working version).
+  for (const date of Object.keys(icuActivities)) {
+    if (date > todayStr) continue;
+    for (const act of (icuActivities[date] || [])) {
+      if (act.icu_ctl === undefined || act.icu_atl === undefined) continue;
+      const ts = act.start_date_local || act.start_date || date;
+      if (date > todayStr) continue;
+      if (!latestTs || ts > latestTs) {
+        latestTs = ts;
+        latestCtl = Number(act.icu_ctl);
+        latestAtl = Number(act.icu_atl);
+      }
+    }
+  }
+
+  // Fallback: wellness endpoint if the Worker exposes it.
+  if (latestCtl === null) {
+    const wellnessDates = Object.keys(icuWellness).filter(d => d <= todayStr).sort();
+    if (wellnessDates.length) {
+      const last = icuWellness[wellnessDates[wellnessDates.length - 1]] || {};
+      if (last.ctl !== undefined || last.ctlLoad !== undefined) latestCtl = Number(last.ctl ?? last.ctlLoad);
+      if (last.atl !== undefined || last.atlLoad !== undefined) latestAtl = Number(last.atl ?? last.atlLoad);
+    }
+  }
+
+  if (Number.isFinite(latestCtl)) {
+    document.getElementById('val-ctl').textContent = Math.round(latestCtl);
+    document.getElementById('val-atl').textContent = Number.isFinite(latestAtl) ? Math.round(latestAtl) : '--';
+    document.getElementById('fitness-fatigue').style.display = 'inline-flex';
+  } else {
+    document.getElementById('fitness-fatigue').style.display = 'none';
+  }
+}
+
+async function icuSync() {
   if (!icuWorkerUrl) return;
   const statusEl = document.getElementById('icu-sync-status');
   statusEl.textContent = 'Nalagam aktivnosti...';
 
-  // Fetch activities for the full 2026/27 training season
-  const url = icuWorkerUrl + '/activities?oldest=2026-10-05&newest=2027-08-08&limit=500';
-  fetch(url)
-    .then(r => r.ok ? r.json() : Promise.reject(r.status))
-    .then(data => {
-      icuActivities = {};
-      const acts = Array.isArray(data) ? data : (data.activities || []);
-      acts.forEach(act => {
-        // Key by date (YYYY-MM-DD)
-        const date = (act.start_date_local || act.date || '').substring(0, 10);
-        if (date) {
-          if (!icuActivities[date]) icuActivities[date] = [];
-          icuActivities[date].push(act);
-        }
-      });
-      // Cache
-      try { localStorage.setItem('roki_icu_cache', JSON.stringify(icuActivities)); } catch(e) {}
-      statusEl.textContent = '✓ ' + acts.length + ' aktivnosti naloženih · ' + new Date().toLocaleTimeString('sl-SI', {hour:'2-digit',minute:'2-digit'});
-      renderWeek();
-      if (!document.getElementById('view-overview').classList.contains('hidden')) renderOverview();
-    })
-    .catch(err => {
-      // Try cache
-      try {
-        const cached = localStorage.getItem('roki_icu_cache') || localStorage.getItem('jat_icu_cache');
-        if (cached) {
-          icuActivities = JSON.parse(cached);
-          statusEl.textContent = '⚠ Iz predpomnilnika (napaka: ' + err + ')';
-        } else {
-          statusEl.textContent = '✗ Napaka pri nalaganju: ' + err;
-        }
-      } catch(e) {
-        statusEl.textContent = '✗ Napaka: ' + err;
-      }
+  const oldest = '2026-09-28';
+  const newest = '2027-08-08';
+  const activityUrl = icuWorkerUrl + '/activities?oldest=' + oldest + '&newest=' + newest + '&limit=500';
+
+  try {
+    const activityResp = await fetch(activityUrl);
+    if (!activityResp.ok) throw new Error('activities ' + activityResp.status);
+    const activityData = await activityResp.json();
+    icuActivities = {};
+    const acts = Array.isArray(activityData) ? activityData : (activityData.activities || []);
+    acts.forEach(act => {
+      const date = (act.start_date_local || act.date || '').substring(0, 10);
+      if (!date) return;
+      if (!icuActivities[date]) icuActivities[date] = [];
+      icuActivities[date].push(act);
     });
+
+    // Optional wellness sync for CTL/ATL. Failure here must not break activities.
+    icuWellness = {};
+    try {
+      const wellnessUrl = icuWorkerUrl + '/wellness?oldest=' + oldest + '&newest=' + newest;
+      const wellnessResp = await fetch(wellnessUrl);
+      if (wellnessResp.ok) {
+        const wellnessData = await wellnessResp.json();
+        const rows = Array.isArray(wellnessData) ? wellnessData : (wellnessData.wellness || wellnessData.data || []);
+        rows.forEach(row => {
+          const date = (row.id || row.date || '').substring(0, 10);
+          if (date) icuWellness[date] = row;
+        });
+      }
+    } catch(e) {}
+
+    try {
+      localStorage.setItem('roki_icu_cache', JSON.stringify(icuActivities));
+      localStorage.setItem('jat_icu_cache', JSON.stringify(icuActivities));
+    } catch(e) {}
+
+    updateFitnessFromActivities();
+    statusEl.textContent = '✓ ' + acts.length + ' aktivnosti naloženih · ' + new Date().toLocaleTimeString('sl-SI', {hour:'2-digit',minute:'2-digit'});
+    renderWeek();
+    if (!document.getElementById('view-overview').classList.contains('hidden')) renderOverview();
+  } catch(err) {
+    try {
+      const cached = localStorage.getItem('roki_icu_cache') || localStorage.getItem('jat_icu_cache');
+      if (cached) {
+        icuActivities = JSON.parse(cached);
+        updateFitnessFromActivities();
+        renderWeek();
+        statusEl.textContent = '⚠ Iz predpomnilnika (napaka: ' + err + ')';
+      } else {
+        statusEl.textContent = '✗ Napaka pri nalaganju: ' + err;
+      }
+    } catch(e) {
+      statusEl.textContent = '✗ Napaka: ' + err;
+    }
+  }
 }
 
 function getIcuActivitiesForWeekDay(week, dayIndex) {
-  // Calculate date for this week+day
   const start = new Date('2026-09-28');
   const dayOffset = (week - 1) * 7 + dayIndex;
   const d = new Date(start);
   d.setDate(d.getDate() + dayOffset);
-  const dateStr = d.toISOString().substring(0, 10);
+  const dateStr = toLocalISODate(d);
   return icuActivities[dateStr] || [];
 }
 
@@ -1182,29 +1278,26 @@ function formatElevation(meters) {
 
 function renderIcuActivity(acts) {
   if (!acts || acts.length === 0) return '';
-  const act = acts[0]; // primary activity of the day
-  const name = act.name || act.type || 'Aktivnost';
-  const duration = formatDuration(act.moving_time || act.elapsed_time);
-  const distance = formatDistance(act.distance);
-  const elevation = formatElevation(act.total_elevation_gain);
-  const actUrl = 'https://intervals.icu/activities/' + act.id;
+  return acts.map(act => {
+    const name = act.name || act.type || 'Aktivnost';
+    const duration = formatDuration(act.moving_time || act.elapsed_time);
+    const distance = formatDistance(act.distance);
+    const elevation = formatElevation(act.total_elevation_gain);
+    const actUrl = act.id ? 'https://intervals.icu/activities/' + encodeURIComponent(act.id) : 'https://intervals.icu';
+    const stats = [
+      { val: duration, lbl: 'Čas' },
+      distance ? { val: distance, lbl: 'Razdalja' } : null,
+      elevation ? { val: elevation, lbl: 'Višina' } : null,
+    ].filter(Boolean);
 
-  const stats = [
-    { val: duration, lbl: 'Čas' },
-    distance ? { val: distance, lbl: 'Razdalja' } : null,
-    elevation ? { val: elevation, lbl: 'Višina' } : null,
-  ].filter(Boolean);
-
-  return `<div class="icu-activity">
-    <div class="icu-activity-name">🏅 ${name}</div>
-    <div class="icu-activity-row">
-      ${stats.map(s => `<div class="icu-activity-stat">
-        <span class="icu-activity-val">${s.val}</span>
-        <span class="icu-activity-lbl">${s.lbl}</span>
-      </div>`).join('')}
-      <a class="icu-activity-link" href="${actUrl}" target="_blank" rel="noopener">Odpri v Intervals.icu →</a>
-    </div>
-  </div>`;
+    return `<div class="icu-activity">
+      <div class="icu-activity-name">🏅 ${name}</div>
+      <div class="icu-activity-row">
+        ${stats.map(s => `<div class="icu-activity-stat"><span class="icu-activity-val">${s.val}</span><span class="icu-activity-lbl">${s.lbl}</span></div>`).join('')}
+        <a class="icu-activity-link" href="${actUrl}" target="_blank" rel="noopener">Odpri v Intervals.icu →</a>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // Load cached activities on startup
@@ -1216,8 +1309,8 @@ try {
 // Auto-open on current week
 (function() {
   const today = new Date();
-  const start = new Date('2026-09-28');
-  const end = new Date('2027-08-08');
+  const start = new Date('2026-09-28T00:00:00');
+  const end = new Date('2027-08-08T23:59:59');
   if (today >= start && today <= end) {
     const diffDays = Math.floor((today - start) / 86400000);
     const weekNum = Math.min(45, Math.floor(diffDays / 7) + 1);
