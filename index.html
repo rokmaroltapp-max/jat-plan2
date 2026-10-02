@@ -67,15 +67,21 @@
   .phase-bar { width: 3px; height: 32px; border-radius: 2px; flex-shrink: 0; }
   .phase-title { font-size: 15px; font-style: italic; }
   .phase-desc { font-size: 11px; color: var(--text3); }
-  .week-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 7px; }
-  .week-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; cursor: pointer; position: relative; transition: border-color 0.15s; }
+  .week-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px,1fr)); gap: 7px; }
+  .week-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px 9px; cursor: pointer; position: relative; transition: border-color 0.15s; min-height: 118px; }
   .week-card:hover { border-color: #868e96; }
   .week-card.selected { background: #f0fdf4; }
   .week-card-regen { position: absolute; top: 5px; right: 7px; font-size: 8px; color: var(--text4); letter-spacing: 0.12em; text-transform: uppercase; }
   .week-card-label { font-size: 10px; color: var(--text4); margin-bottom: 2px; }
   .week-card-num { font-size: 19px; font-style: italic; line-height: 1.1; }
-  .week-dots { display: flex; gap: 3px; margin-top: 8px; }
-  .week-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .week-dots { display: flex; gap: 3px; margin-top: 7px; padding-bottom: 6px; border-bottom: 1px dashed var(--border); }
+  .week-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .week-card-stats { display:flex; flex-wrap:wrap; gap:5px 9px; margin-top:6px; font-family:system-ui,-apple-system,sans-serif; font-size:9px; color:var(--text3); line-height:1.25; }
+  .week-card-stat { display:inline-flex; align-items:center; gap:3px; white-space:nowrap; }
+  .week-card-stat .stat-icon { font-size:10px; }
+  .week-card-stat .stat-val { color:var(--text2); font-weight:600; }
+  .week-card-stats.source-icu .stat-val { color:#15803d; }
+  .week-card-source { margin-top:3px; font-family:system-ui,-apple-system,sans-serif; font-size:8px; color:var(--text4); letter-spacing:.03em; }
   .race-strip { display:flex; flex-wrap:wrap; gap:7px 14px; margin-top:14px; font-size:11px; color:var(--text2); }
   .race-strip span { background:rgba(255,255,255,.65); border:1px solid var(--border); padding:5px 8px; border-radius:999px; }
   .race-strip strong { color:var(--purple); }
@@ -932,6 +938,110 @@ function showView(v, btn) {
   if (v==='overview') renderOverview();
 }
 
+function parseApproxRangeNumber(value) {
+  if (!value) return null;
+  const normalized = String(value).replace(',', '.');
+  const nums = normalized.match(/\d+(?:\.\d+)?/g);
+  if (!nums || nums.length === 0) return null;
+  const values = nums.map(Number).filter(Number.isFinite);
+  if (!values.length) return null;
+  return values.length >= 2 ? (values[0] + values[1]) / 2 : values[0];
+}
+
+function parsePlannedDurationHours(text) {
+  if (!text || /^(Počitek|Popoln počitek|Joga|Razteg|Priprava opreme)/i.test(text.trim())) return 0;
+  const s = String(text).replace(/–/g, '-').replace(/′/g, "'");
+  let total = 0;
+
+  // Ranges like 2:30–3:00 h
+  const hourRange = s.match(/(\d{1,2}:\d{2})\s*-\s*(\d{1,2}:\d{2})\s*h/i);
+  if (hourRange) {
+    const toMin = v => { const [h,m]=v.split(':').map(Number); return h*60+m; };
+    total += ((toMin(hourRange[1]) + toMin(hourRange[2]))/2)/60;
+  } else {
+    const hourClock = s.match(/(\d{1,2}:\d{2})\s*h/i);
+    if (hourClock) { const [h,m]=hourClock[1].split(':').map(Number); total += h + m/60; }
+    const hourDec = s.match(/(\d+(?:[.,]\d+)?)\s*h(?![a-z])/i);
+    if (hourDec && !hourClock) total += Number(hourDec[1].replace(',', '.'));
+  }
+
+  // Minute ranges/singles, e.g. 75′, 60–75', 30-45'
+  const minuteMatches = [...s.matchAll(/(\d+)\s*(?:-|\/)?\s*(\d+)?\s*'/g)];
+  for (const m of minuteMatches) {
+    const mins = m[2] ? (Number(m[1])+Number(m[2]))/2 : Number(m[1]);
+    total += mins/60;
+  }
+  return total;
+}
+
+function parsePlannedKm(text) {
+  if (!text) return 0;
+  const m = String(text).match(/(?:~\s*)?(\d+(?:[.,]\d+)?)(?:\s*-\s*(\d+(?:[.,]\d+)?))?\s*km\b/i);
+  if (!m) return 0;
+  const a = Number(m[1].replace(',', '.'));
+  const b = m[2] ? Number(m[2].replace(',', '.')) : null;
+  return b !== null ? (a+b)/2 : a;
+}
+
+function parsePlannedElevation(text) {
+  if (!text) return 0;
+  const m = String(text).match(/(\d+)\s*(?:-|–)\s*(\d+)\s*m\s*D\+/i);
+  if (m) return (Number(m[1])+Number(m[2]))/2;
+  const single = String(text).match(/(\d+)\s*m\s*D\+/i);
+  return single ? Number(single[1]) : 0;
+}
+
+function getPlannedWeekStats(w) {
+  let hours=0, km=0, elev=0;
+  for (const d of w.days) {
+    hours += parsePlannedDurationHours(d.a);
+    km += parsePlannedKm(d.a);
+    elev += parsePlannedElevation(d.a);
+  }
+  return {hours, km, elev, source:'plan'};
+}
+
+function getIcuWeekStats(w) {
+  let seconds=0, meters=0, elev=0, count=0;
+  for (let di=0; di<w.days.length; di++) {
+    const dayDate=new Date(w.startDate);
+    dayDate.setDate(dayDate.getDate()+di);
+    const acts=icuActivities[toLocalISODate(dayDate)] || [];
+    for (const a of acts) {
+      seconds += Number(a.moving_time || a.elapsed_time || 0);
+      meters += Number(a.distance || 0);
+      elev += Number(a.total_elevation_gain || 0);
+      count++;
+    }
+  }
+  return {hours:seconds/3600, km:meters/1000, elev, source:count?'icu':'plan', count};
+}
+
+function formatWeekHours(hours) {
+  if (!hours || hours < 0.01) return '—';
+  const mins=Math.round(hours*60);
+  const h=Math.floor(mins/60);
+  const m=mins%60;
+  return h ? `${h}h ${String(m).padStart(2,'0')}` : `${m} min`;
+}
+
+function formatWeekKm(km) {
+  if (!km || km < 0.01) return '—';
+  return km < 10 ? `${km.toFixed(1)} km` : `${Math.round(km)} km`;
+}
+
+function formatWeekElev(elev) {
+  if (!elev || elev < 1) return '—';
+  return `${Math.round(elev)} m D+`;
+}
+
+function getWeekOverviewStats(w) {
+  // When Intervals.icu has data for the week, show actual totals; otherwise show planned totals.
+  const icu=getIcuWeekStats(w);
+  if (icu.count > 0) return icu;
+  return getPlannedWeekStats(w);
+}
+
 function renderOverview() {
   const el = document.getElementById('view-overview');
   el.innerHTML = PHASES.map(phase => {
@@ -958,13 +1068,22 @@ function renderOverview() {
           }).join('');
           const sel = currentWeek===w.week ? 'selected' : '';
           const selBorder = currentWeek===w.week ? `border-color:${phase.color}77` : '';
+          const stats = getWeekOverviewStats(w);
+          const statsClass = stats.source === 'icu' ? ' source-icu' : '';
+          const sourceLabel = stats.source === 'icu' ? 'Intervals.icu' : 'načrt';
           return `<div class="week-card ${sel}" style="${selBorder}" onclick="selectWeek(${w.week})">
             ${w.isRegen?'<div class="week-card-regen">regen</div>':''}
             <div class="week-card-label">T${w.week} · ${fmtDate(w.startDate)}</div>
             <div class="week-card-num" style="color:${phase.color}">${[5,30,39,45,52].includes(w.week)?'🏁':'T'+w.week}</div>
             <div class="week-dots">${dots}</div>
-             <div class="week-card-load">${w.info?.load||''}</div>
-             <div class="week-card-focus">${w.info?.focus||''}</div>
+            <div class="week-card-stats${statsClass}">
+              <span class="week-card-stat"><span class="stat-icon">⏱</span><span class="stat-val">${formatWeekHours(stats.hours)}</span></span>
+              <span class="week-card-stat"><span class="stat-icon">📏</span><span class="stat-val">${formatWeekKm(stats.km)}</span></span>
+              <span class="week-card-stat"><span class="stat-icon">▲</span><span class="stat-val">${formatWeekElev(stats.elev)}</span></span>
+            </div>
+            <div class="week-card-source">${sourceLabel}${stats.source === 'icu' ? ` · ${stats.count} aktiv.` : ''}</div>
+            <div class="week-card-load">${w.info?.load||''}</div>
+            <div class="week-card-focus">${w.info?.focus||''}</div>
           </div>`;
         }).join('')}
       </div>
