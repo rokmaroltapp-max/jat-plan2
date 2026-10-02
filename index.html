@@ -191,10 +191,10 @@
   <div class="header-inner">
     <div class="header-top">
       <div>
-        <div class="header-label">Rokovi dnevniki · sezona 2026/27 · 45 tednov</div>
+        <div class="header-label">Rokovi dnevniki · sezona 2026/27 · 52 tednov</div>
         <h1>Rokovi dnevniki</h1>
         <div class="header-sub">Od baze do dolgih gora · tek ali kolo</div>
-        <div class="header-dates">28. september 2026 → <span>8. avgust 2027</span></div>
+        <div class="header-dates">28. september 2026 → <span>26. september 2027</span></div>
         <div class="header-stats-row">
           <div class="wellness-badge" id="fitness-fatigue" style="display:none;">
             💪 Fitnes (CTL): <span id="val-ctl">--</span>
@@ -208,6 +208,7 @@
           <div class="phase-pill"><span class="phase-pill-weeks">T9–T18</span><span class="phase-pill-badge" style="background:#ebfbee;color:#2f9e44;border:1px solid #2f9e4455">Baza + moč</span></div>
           <div class="phase-pill"><span class="phase-pill-weeks">T19–T31</span><span class="phase-pill-badge" style="background:#e7f5ff;color:#1971c2;border:1px solid #1971c255">Ultra / UTVV</span></div>
           <div class="phase-pill"><span class="phase-pill-weeks">T32–T45</span><span class="phase-pill-badge" style="background:#fff3bf;color:#e67700;border:1px solid #e6770055">Lavaredo → K24</span></div>
+          <div class="phase-pill"><span class="phase-pill-weeks">T46–T52</span><span class="phase-pill-badge" style="background:#f8f0fc;color:#6741d9;border:1px solid #6741d955">K24 → Nice · opcijsko</span></div>
         </div>
       </div>
     </div>
@@ -223,6 +224,7 @@
       <span><b>23.4.2027 · 19:00</b> UTVV 163K <em>opcijsko</em></span>
       <span><b>26.6.2027 · 07:00</b> Lavaredo 80K <strong>★ glavni cilj</strong></span>
       <span><b>6.8.2027 · 22:00</b> K24 100K</span>
+      <span><b>24.9.2027 · 13:00</b> UTMB Nice 168K <em>opcijsko</em></span>
     </div>
   </div>
 </div>
@@ -274,6 +276,7 @@ const PHASES = [
   {name:"UTVV blok", weeks:[30,31], color:"#6741d9", desc:"UTVV je opcijska kontrolirana ultra; po tekmi sledi zaščita Lavareda."},
   {name:"Lavaredo spec.", weeks:[32,33,34,35,36,37,38], color:"#e67700", desc:"Gorska specifičnost, spusti, dolgi traili, peak in taper."},
   {name:"Lavaredo → K24", weeks:[39,40,41,42,43,44,45], color:"#ae3ec9", desc:"Glavni cilj Lavaredo, nato regeneracija in drugi vrh na K24."},
+  {name:"K24 → UTMB Nice", weeks:[46,47,48,49,50,51,52], color:"#6741d9", desc:"Po K24 najprej regeneracija; nato kratka specifična priprava za UTMB Nice 168K. Tekma ostane opcijska."},
 ];
 const TYPE_ICONS = {
   "Počitek":"💤","Intervali":"⚡","Prag/klanec":"⛰️","Klanec":"📈","Moč":"💪",
@@ -294,7 +297,7 @@ const ZONE_COLORS = {
   "Z2/Z3":"#5c940d","Z2/Z4":"#c2500a","MAX":"#c92a2a",
   "Srednja":"#6741d9","Nizka":"#868e96","/":"#adb5bd",
 };
-const REGEN_WEEKS = [5,7,8,13,17,22,25,31,40,44];
+const REGEN_WEEKS = [5,7,8,13,17,22,25,31,40,44,46,51];
 
 const STR_A = {
   warmup:"5 min hoja/lahek tek + 10× počep z lastno težo, 10× izpad",
@@ -759,7 +762,56 @@ const RAW = [
   {w:45,d:"ČET",t:"Kratek tek/kolo",a:"30–40′ Z1",b:"45–60′ Z1",z:"Z1"},
   {w:45,d:"PET",t:"Počitek",a:"Počitek + priprava nočne opreme",b:"Počitek + priprava nočne opreme",z:"/"},
   {w:45,d:"PET",t:"TEKMA",a:"K24 100 km 🌙🏁 · 6. 8. 2027 ob 22:00",b:"K24 100 km 🌙🏁 · tekma; kolo ni alternativa",z:"MAX"},
-  {w:45,d:"NED",t:"REGENERACIJA",a:"Počitek / praznovanje 🎉",b:"Počitek / zelo lahkotno kolo",z:"/"}
+  {w:45,d:"NED",t:"REGENERACIJA",a:"Počitek / praznovanje 🎉",b:"Počitek / zelo lahkotno kolo",z:"/"},
+  {w:46,d:"PON",t:"Počitek",a:"Popoln počitek po K24",b:"Popoln počitek po K24",z:"/"},
+  {w:46,d:"TOR",t:"Regeneracija",a:"30–40′ hoja ali zelo lahek tek Z1",b:"45–60′ zelo lahko kolo Z1",z:"Z1"},
+  {w:46,d:"SRE",t:"Mobilnost",a:"20–30′ mobilnost + lahkotno raztezanje",b:"20–30′ mobilnost + lahkotno raztezanje",z:"Nizka"},
+  {w:46,d:"ČET",t:"Regeneracija",a:"30–45′ Z1, samo če so noge sveže",b:"60–75′ Z1",z:"Z1"},
+  {w:46,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:46,d:"SOB",t:"Aktivno",a:"60–90′ lahek pohod",b:"90–120′ zelo lahko kolo",z:"Z1"},
+  {w:46,d:"NED",t:"Počitek",a:"Počitek",b:"45′ Z1 kolo, samo če pomaga regeneraciji",z:"/"},
+  {w:47,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:47,d:"TOR",t:"Aktivacija",a:"45′ Z1–Z2 + 4×2′ Z3 na blag klanec",b:"60′ Z1–Z2 + 4×4′ Z3",z:"Z2/Z3"},
+  {w:47,d:"SRE",t:"Moč",a:"30′ vzdrževanje + trup",b:"30′ vzdrževanje + trup",z:"Srednja"},
+  {w:47,d:"ČET",t:"Aerobno",a:"75′ Z2",b:"2:00 h Z2",z:"Z2"},
+  {w:47,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:47,d:"SOB",t:"Dolg trail",a:"2:30–3:00 h trail (~18–22 km), Z2",b:"4:00 h kolo, Z2",z:"Z2"},
+  {w:47,d:"NED",t:"Back-to-back",a:"60–75′ zelo lahkotno (~7–10 km), Z1",b:"90′ Z1 kolo",z:"Z1"},
+  {w:48,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:48,d:"TOR",t:"Klanec",a:"5×5′ vzpon @Z4, kontrolirano",b:"5×8′ klanec @Z4",z:"Z4"},
+  {w:48,d:"SRE",t:"Moč",a:"30′ funkcionalna moč",b:"30′ funkcionalna moč",z:"Srednja"},
+  {w:48,d:"ČET",t:"Spec. vzdržl.",a:"90′ Z2/Z3, 3×10′ vzpona",b:"2:30 h Z2/Z3, 3×15′ klanca",z:"Z2/Z3"},
+  {w:48,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:48,d:"SOB",t:"Dolg trail",a:"3:30–4:00 h trail (~25–30 km), 800–1200 m D+, prehrana 50–60 g OH/h",b:"5:00 h kolo z 1000–1400 m D+",z:"Z2"},
+  {w:48,d:"NED",t:"Back-to-back",a:"90′ trail (~10–13 km), Z1–Z2",b:"2:00 h zelo lahko kolo",z:"Z1/Z2"},
+  {w:49,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:49,d:"TOR",t:"Klanec",a:"6×6′ vzpon @Z4",b:"6×9′ klanec @Z4",z:"Z4"},
+  {w:49,d:"SRE",t:"Moč",a:"25–30′ vzdrževanje",b:"25–30′ vzdrževanje",z:"Srednja"},
+  {w:49,d:"ČET",t:"Spec. aerobno",a:"2:00 h Z2 z 4×10′ vzpona",b:"3:00 h Z2 z dolgimi klanci",z:"Z2/Z3"},
+  {w:49,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:49,d:"SOB",t:"Dolg trail",a:"4:30 h trail (~32–35 km), 1000–1400 m D+, zadnja ura zelo kontrolirano",b:"6:00 h kolo z veliko D+",z:"Z2"},
+  {w:49,d:"NED",t:"Back-to-back",a:"2:00 h trail (~14–17 km), Z1–Z2",b:"2:30 h Z1–Z2 kolo",z:"Z1/Z2"},
+  {w:50,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:50,d:"TOR",t:"Klanec",a:"5×8′ vzpon @Z3/Z4, brez forsiranja",b:"5×12′ klanec @Z3/Z4",z:"Z3/Z4"},
+  {w:50,d:"SRE",t:"Moč",a:"20–25′ vzdrževanje + trup",b:"20–25′ vzdrževanje + trup",z:"Nizka/Srednja"},
+  {w:50,d:"ČET",t:"Spec. vzdržl.",a:"2:00 h Z2/Z3, vadba prehrane za ultra",b:"3:00 h Z2/Z3, vadba prehrane za ultra",z:"Z2/Z3"},
+  {w:50,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:50,d:"SOB",t:"Dolg trail",a:"5:00–5:30 h trail (~35–40 km), 1200–1600 m D+, celotna prehranska strategija",b:"6:30 h kolo z 1400–1800 m D+",z:"Z2"},
+  {w:50,d:"NED",t:"Back-to-back",a:"2:30 h trail (~17–20 km), Z1–Z2",b:"3:00 h Z1–Z2 kolo",z:"Z1/Z2"},
+  {w:51,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:51,d:"TOR",t:"Aktivacija",a:"60′ Z2 + 4×2′ Z3",b:"90′ Z2 + 4×4′ Z3",z:"Z2/Z3"},
+  {w:51,d:"SRE",t:"Mobilnost",a:"25′ mobilnost",b:"25′ mobilnost",z:"Nizka"},
+  {w:51,d:"ČET",t:"Kratek tek/kolo",a:"60′ Z2",b:"90′ Z2",z:"Z2"},
+  {w:51,d:"PET",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:51,d:"SOB",t:"Dolg trail",a:"3:00 h trail (~21–24 km), sproščeno Z2",b:"4:30 h kolo, sproščeno Z2",z:"Z2"},
+  {w:51,d:"NED",t:"Počitek",a:"Počitek",b:"60′ Z1 kolo",z:"/"},
+  {w:52,d:"PON",t:"Počitek",a:"Počitek",b:"Počitek",z:"/"},
+  {w:52,d:"TOR",t:"Aktivacija",a:"45′ Z1–Z2 + 4×60–90″ Z3",b:"60′ Z1–Z2 + 4×2′ Z3",z:"Z2/Z3"},
+  {w:52,d:"SRE",t:"Mobilnost",a:"20′ mobilnost + priprava opreme",b:"20′ mobilnost + priprava opreme",z:"Nizka"},
+  {w:52,d:"ČET",t:"Kratek tek/kolo",a:"30–40′ Z1, brez napora",b:"45–60′ Z1",z:"Z1"},
+  {w:52,d:"PET",t:"TEKMA",a:"UTMB Nice 168 km 🏁 · 24. 9. 2027 ob 13:00 · OPCIJSKO",b:"UTMB Nice 168 km 🏁 · tekma; kolo ni alternativa",z:"MAX"},
+  {w:52,d:"SOB",t:"REGENERACIJA",a:"Počitek + hoja po občutku",b:"Počitek / zelo lahkotno kolo",z:"/"},
+  {w:52,d:"NED",t:"REGENERACIJA",a:"Počitek",b:"Počitek / zelo lahkotno kolo",z:"/"}
 ];
 
 const WEEK_INFO = {
@@ -807,7 +859,14 @@ const WEEK_INFO = {
   42:{load:"8–10 h",focus:"K24 · dolžina + nočni trening"},
   43:{load:"9–11 h",focus:"K24 · specifično + noč"},
   44:{load:"5–7 h",focus:"K24 taper"},
-  45:{load:"2–5 h",focus:"🌙 K24 100 km · start 22:00"}
+  45:{load:"2–5 h",focus:"🌙 K24 100 km · start 22:00"},
+  46:{load:"3–5 h",focus:"K24 recovery · odločitev o UTMB Nice še ni potrebna"},
+  47:{load:"6–8 h",focus:"Vrnitev v ritem · lahkotna specifična gradnja"},
+  48:{load:"8–10 h",focus:"Nice opcijsko · prvi specifični dolg trail"},
+  49:{load:"9–11 h",focus:"Nice opcijsko · dolg vikend + prehrana"},
+  50:{load:"10–12 h",focus:"Nice opcijsko · zadnji velik blok"},
+  51:{load:"5–7 h",focus:"Nice taper · samo če greš na tekmo"},
+  52:{load:"2–5 h",focus:"🏁 UTMB Nice 168 km · start 13:00 · OPCIJSKO"}
 };
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
@@ -850,7 +909,7 @@ function saveInputNote(key) {
 function canSwap(d) { return d.a !== d.b && !["Počitek","Mobilnost","TEKMA","REGENERACIJA"].includes(d.t); }
 
 function getWeeks() {
-  return Array.from({length:45},(_,i)=>{
+  return Array.from({length:52},(_,i)=>{
     const wn=i+1;
     const start=new Date("2026-09-28");
     start.setDate(start.getDate()+i*7);
@@ -902,7 +961,7 @@ function renderOverview() {
           return `<div class="week-card ${sel}" style="${selBorder}" onclick="selectWeek(${w.week})">
             ${w.isRegen?'<div class="week-card-regen">regen</div>':''}
             <div class="week-card-label">T${w.week} · ${fmtDate(w.startDate)}</div>
-            <div class="week-card-num" style="color:${phase.color}">${[5,29,38,44].includes(w.week)?'🏁':'T'+w.week}</div>
+            <div class="week-card-num" style="color:${phase.color}">${[5,30,39,45,52].includes(w.week)?'🏁':'T'+w.week}</div>
             <div class="week-dots">${dots}</div>
              <div class="week-card-load">${w.info?.load||''}</div>
              <div class="week-card-focus">${w.info?.focus||''}</div>
@@ -994,7 +1053,7 @@ function renderWeek() {
         ${w.isRegen?'<span class="week-nav-regen">regeneracijski</span>':''}
         ${w.info?.load?`<span class="week-nav-regen">cilj ${w.info.load}</span>`:''}
       </div>
-      <button class="nav-btn" onclick="changeWeek(1)" ${currentWeek===45?'disabled':''}>→</button>
+      <button class="nav-btn" onclick="changeWeek(1)" ${currentWeek===52?'disabled':''}>→</button>
     </div>
     <div class="phase-note" style="background:${w.phase.color}0f;border:1px solid ${w.phase.color}28;color:${w.phase.color}">
       ${w.phase.desc}
@@ -1003,7 +1062,7 @@ function renderWeek() {
     <div class="bottom-nav">
       <button class="bottom-btn" onclick="changeWeek(-1)" ${currentWeek===1?'disabled':''}>← Prejšnji</button>
       <button class="bottom-btn center" onclick="showViewOverview()">Pregled</button>
-      <button class="bottom-btn" onclick="changeWeek(1)" ${currentWeek===45?'disabled':''}>Naslednji →</button>
+      <button class="bottom-btn" onclick="changeWeek(1)" ${currentWeek===52?'disabled':''}>Naslednji →</button>
     </div>`;
 }
 
@@ -1071,7 +1130,7 @@ function toggleNoteInput(key) {
 }
 
 function changeWeek(delta) {
-  currentWeek = Math.max(1, Math.min(45, currentWeek + delta));
+  currentWeek = Math.max(1, Math.min(52, currentWeek + delta));
   renderWeek();
 }
 
@@ -1191,7 +1250,7 @@ async function icuSync() {
   statusEl.textContent = 'Nalagam aktivnosti...';
 
   const oldest = '2026-09-28';
-  const newest = '2027-08-08';
+  const newest = '2027-09-26';
   const activityUrl = icuWorkerUrl + '/activities?oldest=' + oldest + '&newest=' + newest + '&limit=500';
 
   try {
@@ -1310,10 +1369,10 @@ try {
 (function() {
   const today = new Date();
   const start = new Date('2026-09-28T00:00:00');
-  const end = new Date('2027-08-08T23:59:59');
+  const end = new Date('2027-09-26T23:59:59');
   if (today >= start && today <= end) {
     const diffDays = Math.floor((today - start) / 86400000);
-    const weekNum = Math.min(45, Math.floor(diffDays / 7) + 1);
+    const weekNum = Math.min(52, Math.floor(diffDays / 7) + 1);
     currentWeek = weekNum;
     // Switch to week view
     document.querySelectorAll('.tab-btn').forEach((b,i)=>{if(i===1)b.classList.add('active');else b.classList.remove('active');});
